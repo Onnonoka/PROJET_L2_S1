@@ -9,8 +9,6 @@
     - [ ] ddg.c
     - [ ] ddgm.c
   - **Warning and Error**
-    - *error* player.h line 11 
-      > expected member name or ';' after declaration specifiers
     
     
   **ADO** : [Projet calculatrice](http://ecariou.perso.univ-pau.fr/cours/archi/sujet-projet.html)
