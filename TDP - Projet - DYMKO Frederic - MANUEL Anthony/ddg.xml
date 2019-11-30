@@ -1,0 +1,43 @@
+<ddg name="The frozen cave">
+    <date>
+        <day>01</day>
+        <month>09</month>
+        <year>2019</year>
+    </date>
+    <dmname>Pierre</dmname>
+    <players>
+        <player name="Camille">
+            <ac>5</ac>
+            <class>Thief</class>
+            <cname>Camigolas</cname>
+            <hp>4</hp>
+            <money>
+                <cp>10</cp>
+                <gp>10</gp>
+                <sp>10</sp>
+            </money>
+        </player>
+        <player name="Jean">
+            <ac>4</ac>
+            <class>Fighter</class>
+            <cname>Jeragorn</cname>
+            <hp>8</hp>
+            <money>
+                <cp>3</cp>
+                <gp>1</gp>
+                <sp>2</sp>
+            </money>
+        </player>
+        <player name="Paul">
+            <ac>5</ac>
+            <class>Cleric</class>
+            <cname>Paumli</cname>
+            <hp>6</hp>
+            <money>
+                <cp>9</cp>
+                <gp>5</gp>
+                <sp>9</sp>
+            </money>
+        </player>
+    </players>
+</ddg>
