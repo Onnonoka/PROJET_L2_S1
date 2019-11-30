@@ -70,10 +70,4 @@ void player_handle_pale(player_t player, int ac);
  * */
 void player_handle_palt(player_t player, int ac);
 
-/**
- * *Handles the pc command for a player.
- * *\param player The player.
- * *\param class The player class.
- * */
-void player_handle_pc(player_t player, const char* class);
 #endif
