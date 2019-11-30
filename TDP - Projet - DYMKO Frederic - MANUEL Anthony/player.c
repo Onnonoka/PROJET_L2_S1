@@ -6,9 +6,19 @@
 #include "player.h"
 
 player_t *player_create() {
+    /*
+    Initialisation
+    */
     player_t *player;
 
+    /*
+    Allocation
+    */
     player = malloc(sizeof(player_t));
+
+    /*
+    Traitement
+    */
     if (player == NULL) return NULL;
     player->ac = 0;
     player->class = NULL;
@@ -21,6 +31,10 @@ player_t *player_create() {
 }
 
 void player_free(player_t *player) {
+    //free all
+    free(player->class);
+    free(player->cname);
+    free(player->name);
     free(player);
 }
 
@@ -60,4 +74,8 @@ void player_handle_palt(player_t player, int ac) {
     if (player.ac < ac) {
         player_handle_p(player);
     }
+}
+
+void player_handle_pc(player_t player, const char* class) {
+    
 }
