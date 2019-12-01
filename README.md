@@ -18,11 +18,9 @@
     - [ ] Partie 3
   - **Warning and Error**
     - *Warning* Partie 1.cir/Unité de calcul
-      > Largeur incompatible (2)
-
-      > Multiplieur sortie 8 bit -> Sequenseur entré 1 bit
-      
-      > Diviseur sortie 8 bit -> Sequenseur entré 1 bit
+      > Largeur incompatible (2) : 
+        > Multiplieur sortie 8 bit -> Sequenseur entré 1 bit
+        > Diviseur sortie 8 bit -> Sequenseur entré 1 bit
 
 
   **DAI** : Projet
