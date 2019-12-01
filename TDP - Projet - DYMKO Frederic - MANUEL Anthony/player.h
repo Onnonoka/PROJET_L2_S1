@@ -70,4 +70,59 @@ void player_handle_pale(player_t player, int ac);
  * */
 void player_handle_palt(player_t player, int ac);
 
+/**
+ * *Handles the pc command for a player.
+ * *\param player The player.
+ * *\param class The player class.
+ * */
+void player_handle_pc(player_t player, const char*class);
+
+/**
+ * *Handles the pcn command for a player.
+ * *\param player The player.
+ * *\param cname The player character name.
+ * */
+void player_handle_pcn(player_t player, const char*cname);
+
+/**
+ * *Handles the ph command for a player.
+ * *\param player The player.
+ * *\param hp The player hit points.
+ * */
+void player_handle_ph(player_t player, int hp);
+
+/**
+ * *Handles the phge command for a player.
+ * *\param player The player.
+ * *\param hp The player hit points.
+ * */
+ void player_handle_phge(player_t player, int hp);
+
+/**
+ * *Handles the phgt command for a player.
+ * *\param player The player.
+ * *\param hp The player hit points.
+ * */
+void player_handle_phgt(player_t player, int hp);
+
+/**
+ * *Handles the phle command for a player.
+ * *\param player The player.
+ * *\param hp The player hit points.
+ * */
+void player_handle_phle(player_t player, int hp);
+
+/**
+ * *Handles the phlt command for a player.
+ * *\param player The player.
+ * *\param hp The player hit points.
+ * */
+void player_handle_phlt(player_t player, int hp);
+
+/**
+ * *Handles the pn command for a player.
+ * *\param player The player.
+ * *\param name The player name.
+ * */
+void player_handle_pn(player_t player, const char*name);
 #endif

@@ -3,8 +3,8 @@
   **TDP** : [Projet ddg](https://elearn.univ-pau.fr/pluginfile.php/492181/mod_resource/content/2/projet-20191119.pdf)
   - **TO DO**
     - [x] Makefile
-    - [ ] player.h
-    - [ ] player.c
+    - [x] player.h
+    - [x] player.c
     - [ ] ddg.h
     - [ ] ddg.c
     - [ ] ddgm.c
