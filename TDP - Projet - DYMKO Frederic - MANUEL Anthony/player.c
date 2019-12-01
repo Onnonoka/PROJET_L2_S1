@@ -27,7 +27,6 @@ player_t *player_create() {
     /*
     Traitement
     */
-
     printf("The player name: ");
     scanf("%s", player->name);
 
@@ -62,7 +61,7 @@ void player_free(player_t *player) {
     free(player->class);
     free(player->cname);
     free(player->name);
-    
+
     /*
     free the player
     */
