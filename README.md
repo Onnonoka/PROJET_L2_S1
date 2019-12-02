@@ -13,7 +13,7 @@
     
   **ADO** : [Projet unite de calcul](http://ecariou.perso.univ-pau.fr/cours/archi/sujet-projet.html)
   - **TO DO**
-    - [ ] Partie 1
+    - [x] Partie 1
     - [ ] Partie 2
     - [ ] Partie 3
   - **Warning and Error**
