@@ -25,6 +25,18 @@
       > Heuuuu c'est logisim
 
 
-  **DAI** : Projet
+  **DAI** : [Projet Portfolio Cryptos](http://bjobard.perso.univ-pau.fr/Cours/DAI/Projet_cryptos.html)
+  - **TO DO**
+    - [ ] cryptop__main.js
+    - [ ] cryptop__utils.js
+    - [ ] cryptop__config0.js
+    - [ ] cryptop__config1.js
+    - [ ] cryptop__config2.js
+    - [ ] cryptop_actions.js
+    - [ ] cryptop_model.js
+    - [ ] cryptop_state.js
+    - [ ] cryptop_view.js
+  - **Warning and Error**
+    
     
     
