@@ -18,7 +18,7 @@
     - [ ] Partie 3
   - **Warning and Error**
     - *Warning* partie 1.cir
-      > Incertitude sur la completute de l'exercice
+      > Incertitude sur la completute de l'exercice parti 1
 
 
   **DAI** : [Projet Portfolio Cryptos](http://bjobard.perso.univ-pau.fr/Cours/DAI/Projet_cryptos.html)
