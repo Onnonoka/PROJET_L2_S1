@@ -17,12 +17,8 @@
     - [ ] Partie 2
     - [ ] Partie 3
   - **Warning and Error**
-    - *Warning* Partie 1.cir/Unité de calcul
-      > Largeur incompatible (2) : 
-      > Multiplieur sortie 8 bit -> Sequenseur entré 1 bit,
-      > Diviseur sortie 8 bit -> Sequenseur entré 1 bit
-    - *Error* Partie 1.cir/Sequenseur
-      > Heuuuu c'est logisim
+    - *Warning* partie 1.cir
+      > Incertitude sur la completute de l'exercice
 
 
   **DAI** : [Projet Portfolio Cryptos](http://bjobard.perso.univ-pau.fr/Cours/DAI/Projet_cryptos.html)
