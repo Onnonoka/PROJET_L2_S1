@@ -63,17 +63,16 @@ player_t *player_create() {
 }
 
 void player_free(player_t *player) {
-    /*
-    free all allocation in player
-    */
     if (player != NULL) {
-
+        /*
+        libere la memoir allouer dans player
+        */
         if (player->class != NULL) free(player->class);
         if (player->cname != NULL) free(player->cname);
         if (player->name != NULL) free(player->name);
 
         /*
-        free the player
+        libere la memoire allouer de player
         */
         free(player);
     }
@@ -81,6 +80,9 @@ void player_free(player_t *player) {
 }
 
 void player_handle_p(player_t player) {
+    /*
+    Affiche les informations de player
+    */
     printf("%s (%s), ", player.name, player.cname);
     printf("%s, ", player.class);
     printf("AC: %d, HP: %d, ",player.ac, player.hp);
@@ -111,22 +113,31 @@ void player_handle_pale(player_t player, int ac) {
         player_handle_p(player);
     }
 }
-
 void player_handle_palt(player_t player, int ac) {
+    
     if (player.ac < ac) {
         player_handle_p(player);
     }
 }
 
-void player_handle_pc(player_t player, const char*class) {
+void player_handle_pc(player_t player, const char *class) {
     int i, j;
     int verif, lenght;
 
     verif = 0;
     lenght = 0;
     i = 0;
+    /*
+    Tant qu'on a pas atteint la fin de player.class 1 fois 
+    ou qu'on a trouvé class dans player.class
+    */
     while (!lenght && !verif) {
         j = 0;
+        /*
+        Tant qu'on a pas atteint la fin de player.class 
+        ou qu'on a pas atteint la fin de class 
+        ou qu'il n'y a pas concordance
+        */
         while (player.class[i + j] != '\0' && class[j] != '\0' && player.class[i + j] == class[j]) {
             j++;
         }
@@ -142,15 +153,24 @@ void player_handle_pc(player_t player, const char*class) {
     }
 }
 
-void player_handle_pcn(player_t player, const char*cname) {
+void player_handle_pcn(player_t player, const char *cname) {
     int i, j;
     int verif, lenght;
 
     verif = 0;
     lenght = 0;
     i = 0;
+    /*
+    Tant qu'on a pas atteint la fin de player.class 1 fois 
+    ou qu'on a trouvé class dans player.class
+    */
     while (!lenght && !verif) {
         j = 0;
+        /*
+        Tant qu'on a pas atteint la fin de player.class 
+        ou qu'on a pas atteint la fin de class 
+        ou qu'il n'y a pas concordance
+        */
         while (player.cname[i + j] != '\0' && cname[j] != '\0' && player.cname[i + j] == cname[j]) {
             j++;
         }
@@ -196,15 +216,24 @@ void player_handle_phlt(player_t player, int hp) {
     }
 }
 
-void player_handle_pn(player_t player, const char*name) {
+void player_handle_pn(player_t player, const char *name) {
     int i, j;
     int verif, lenght;
 
     verif = 0;
     lenght = 0;
     i = 0;
+    /*
+    Tant qu'on a pas atteint la fin de player.class 1 fois 
+    ou qu'on a trouvé class dans player.class
+    */
     while (!lenght && !verif) {
         j = 0;
+        /*
+        Tant qu'on a pas atteint la fin de player.class 
+        ou qu'on a pas atteint la fin de class 
+        ou qu'il n'y a pas concordance
+        */
         while (player.name[i + j] != '\0' && name[j] != '\0' && player.name[i + j] == name[j]) {
             j++;
         }

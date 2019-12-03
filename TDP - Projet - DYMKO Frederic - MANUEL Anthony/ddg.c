@@ -44,8 +44,10 @@ ddg_t *ddg_create() {
     */
    printf("The date (jj-mm-aa): ");
    scanf("%d-%d-%d", &ddg->day, &ddg->month, &ddg->year);
+
    printf("The dungeon master name :");
    scanf("%s", ddg->dmname);
+
    ddg->nplayers = 0;
    ddg->players = NULL;
 
@@ -55,16 +57,25 @@ ddg_t *ddg_create() {
 void ddg_free(ddg_t *ddg) {
     int i;
     if (ddg != NULL) {
+        /*
+        libere la memoir allouer dans ddg
+        */
         if (ddg->dmname != NULL) free(ddg->dmname);
         if (ddg->name != NULL) free(ddg->name);
         if (ddg->players != NULL) {
             i = ddg->nplayers - 1;
+            /*
+            libere la memoire allouer pour chaque player
+            */ 
             while (i >= 0) {
                 player_free(ddg->players[i]);
                 i--;
-            }            
+            }
             free(ddg->players);
         }
+        /*
+        libere la memoire allouer de ddg
+        */
         free(ddg);
     }
 }
