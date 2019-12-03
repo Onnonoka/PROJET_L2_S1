@@ -21,13 +21,11 @@ int main(int argc, char *argv[]) {
     }
     xmlFileNode = xmlDocGetRootElement(xmlFile);
     
-
     /*
     *   LES COMMANDES SUIVANTES SONT A SUPRIMER
     *   Elles sont utilisés pour la compilation
     */
     printf("%s", xmlFileNode->name);
-
-
+    
     return 0;
 }
