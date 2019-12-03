@@ -24,3 +24,4 @@ clean:
 
 clear:
 	$(RM) *.o *.out
+	
