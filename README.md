@@ -5,8 +5,8 @@
     - [x] Makefile
     - [x] player.h
     - [x] player.c
-    - [ ] ddg.h
-    - [ ] ddg.c
+    - [x] ddg.h
+    - [x] ddg.c
     - [ ] ddgm.c
   - **Warning and Error**
     

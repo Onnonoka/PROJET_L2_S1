@@ -139,3 +139,75 @@ void ddg_handle_palt(ddg_t ddg, int ac) {
         i--;
     }
 }
+
+void ddg_handle_pc(ddg_t ddg, const char *class) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_pc(*(ddg.players[i]), class);
+        i--;
+    }
+}
+
+void ddg_handle_pcn(ddg_t ddg, const char *cname) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_pcn(*(ddg.players[i]), cname);
+        i--;
+    }
+}
+
+void ddg_handle_ph(ddg_t ddg, int hp) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_ph(*(ddg.players[i]), hp);
+        i--;
+    }
+}
+
+void ddg_handle_phge(ddg_t ddg, int hp) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_phge(*(ddg.players[i]), hp);
+        i--;
+    }
+}
+
+void ddg_handle_phgt(ddg_t ddg, int hp) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_phgt(*(ddg.players[i]), hp);
+        i--;
+    }
+}
+
+void ddg_handle_phle(ddg_t ddg, int hp) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_phle(*(ddg.players[i]), hp);
+        i--;
+    }
+}
+
+void ddg_handle_phlt(ddg_t ddg, int hp) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_phlt(*(ddg.players[i]), hp);
+        i--;
+    }
+}
+
+void ddg_handle_pn(ddg_t ddg, const char *name) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_pn(*(ddg.players[i]), name);
+        i--;
+    }
+}

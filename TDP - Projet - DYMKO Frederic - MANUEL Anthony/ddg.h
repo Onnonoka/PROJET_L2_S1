@@ -101,4 +101,62 @@ void ddg_handle_pale(ddg_t ddg, int ac);
  * *\param ac The player armor class.
  * */
 void ddg_handle_palt(ddg_t ddg,int ac);
+
+/**
+ * *Handles the pc command for all the players of a DDG.
+ * *\param ddg The DDG.
+ * *\param class The player class.
+ * */
+void ddg_handle_pc(ddg_t ddg, const char *class);
+
+/**
+ * *Handles the pcn command for all the players of a DDG.
+ * *\param ddg The DDG.
+ * *\param cname The player character name.
+ * */
+void ddg_handle_pcn(ddg_t ddg, const char *cname);
+
+/**
+ * *Handles the ph command for all the players of a DDG.
+ * *\param ddg The DDG.
+ * *\param hp The player hit points.
+ * */
+void ddg_handle_ph(ddg_t ddg, int hp);
+
+/**
+ * *Handles the phge command for all the players of a DDG.
+ * *\param ddg The DDG.
+ * *\param hp The player hit points.
+ * */
+void ddg_handle_phge(ddg_t ddg, int hp);
+
+/**
+ * *Handles the phgt command for all the players of a DDG.
+ * *\param ddg The DDG.
+ * *\param hp The player hit points.
+ * */
+void ddg_handle_phgt(ddg_t ddg, int hp);
+
+/**
+ * *Handles the phle command for all the players of a DDG.
+ * *\param ddg The DDG.
+ * *\param hp The player hit points.
+ * */
+void ddg_handle_phle(ddg_t ddg, int hp);
+
+/**
+ * *Handles the phlt command for all the players of a DDG.
+ * *\param ddg The DDG.
+ * *\param hp The player hit points.
+ * */
+void ddg_handle_phlt(ddg_t ddg, int hp);
+
+
+
+/**
+ * *Handles the pn command for all the players of a DDG.
+ * *\param ddg The DDG.
+ * *\param name The DDG name.
+ * */
+void ddg_handle_pn(ddg_t ddg, const char *name);
 #endif
