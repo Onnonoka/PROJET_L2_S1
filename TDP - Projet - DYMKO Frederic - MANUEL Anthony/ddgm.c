@@ -29,6 +29,5 @@ int main(int argc, char *argv[]) {
     printf("%s", xmlFileNode->name);
 
 
-
     return 0;
 }
