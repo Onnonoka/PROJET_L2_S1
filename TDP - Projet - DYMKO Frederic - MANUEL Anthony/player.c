@@ -1,7 +1,6 @@
 #ifndef STD
     #include <stdio.h>
     #include <stdlib.h>
-    #include <stdbool.h>
 #endif
 
 #include "player.h"
@@ -18,11 +17,20 @@ player_t *player_create() {
     player = malloc(sizeof(player_t));
     if (player == NULL) return NULL;
     player->name = malloc(sizeof(char));
-    if (player->name == NULL) return NULL;
+    if (player->name == NULL) {
+        player_free(player);
+        return NULL;
+    }
     player->class = malloc(sizeof(char));
-    if (player->name == NULL) return NULL;
+    if (player->name == NULL) {
+        player_free(player);
+        return NULL;
+    }
     player->cname = malloc(sizeof(char));
-    if (player->name == NULL) return NULL;
+    if (player->name == NULL) {
+        player_free(player);
+        return NULL;
+    }
 
     /*
     Traitement
@@ -58,14 +66,18 @@ void player_free(player_t *player) {
     /*
     free all allocation in player
     */
-    free(player->class);
-    free(player->cname);
-    free(player->name);
+    if (player != NULL) {
 
-    /*
-    free the player
-    */
-    free(player);
+        if (player->class != NULL) free(player->class);
+        if (player->cname != NULL) free(player->cname);
+        if (player->name != NULL) free(player->name);
+
+        /*
+        free the player
+        */
+        free(player);
+    }
+
 }
 
 void player_handle_p(player_t player) {
@@ -108,10 +120,10 @@ void player_handle_palt(player_t player, int ac) {
 
 void player_handle_pc(player_t player, const char*class) {
     int i, j;
-    bool verif, lenght;
+    int verif, lenght;
 
-    verif = false;
-    lenght = false;
+    verif = 0;
+    lenght = 0;
     i = 0;
     while (!lenght && !verif) {
         j = 0;
@@ -119,9 +131,9 @@ void player_handle_pc(player_t player, const char*class) {
             j++;
         }
         if (player.class[i + j] != '\0' && class[j] != '\0') {
-            verif = true;
+            verif = 1;
         } else if (player.class[i + j] == '\0') {
-            lenght = true;
+            lenght = 1;
         }
         i++;
     }
@@ -132,10 +144,10 @@ void player_handle_pc(player_t player, const char*class) {
 
 void player_handle_pcn(player_t player, const char*cname) {
     int i, j;
-    bool verif, lenght;
+    int verif, lenght;
 
-    verif = false;
-    lenght = false;
+    verif = 0;
+    lenght = 0;
     i = 0;
     while (!lenght && !verif) {
         j = 0;
@@ -143,9 +155,9 @@ void player_handle_pcn(player_t player, const char*cname) {
             j++;
         }
         if (player.cname[i + j] != '\0' && cname[j] != '\0') {
-            verif = true;
+            verif = 1;
         } else if (player.cname[i + j] == '\0') {
-            lenght = true;
+            lenght = 1;
         }
         i++;
     }
@@ -186,10 +198,10 @@ void player_handle_phlt(player_t player, int hp) {
 
 void player_handle_pn(player_t player, const char*name) {
     int i, j;
-    bool verif, lenght;
+    int verif, lenght;
 
-    verif = false;
-    lenght = false;
+    verif = 0;
+    lenght = 0;
     i = 0;
     while (!lenght && !verif) {
         j = 0;
@@ -197,9 +209,9 @@ void player_handle_pn(player_t player, const char*name) {
             j++;
         }
         if (player.name[i + j] != '\0' && name[j] != '\0') {
-            verif = true;
+            verif = 1;
         } else if (player.name[i + j] == '\0') {
-            lenght = true;
+            lenght = 1;
         }
         i++;
     }

@@ -1,1 +1,141 @@
+#ifndef STD_H
+    #define STD_H
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <stdbool.h>
+#endif
+#include "ddg.h"
 
+int ddg_add_player(ddg_t *ddg, player_t *player) {
+    if (ddg->nplayers == 0) {
+        ddg->players = malloc(sizeof(player_t *));
+    } else {
+        ddg->players = realloc(ddg->players, sizeof(player_t *) * (ddg->nplayers + 1));
+    }
+    if (ddg->players == NULL) return -1;
+    ddg->players[ddg->nplayers] = player;
+    ddg->nplayers++;
+    return 0;
+}
+
+ddg_t *ddg_create() {
+    /*
+    Initialisation
+    */
+    ddg_t *ddg;
+
+    /*
+    Allocations
+    */
+    ddg = malloc(sizeof(ddg_t));
+    if (ddg == NULL) return NULL;
+    ddg->dmname = malloc(sizeof(char));
+    if (ddg->dmname == NULL) {
+        ddg_free(ddg);
+        return NULL;
+    }
+    ddg->name = malloc(sizeof(char));
+    if (ddg->name == NULL) {
+        ddg_free(ddg);
+        return NULL;
+    }
+
+    /*
+    Traitement
+    */
+   printf("The date (jj-mm-aa): ");
+   scanf("%d-%d-%d", &ddg->day, &ddg->month, &ddg->year);
+   printf("The dungeon master name :");
+   scanf("%s", ddg->dmname);
+   ddg->nplayers = 0;
+   ddg->players = NULL;
+
+   return ddg;
+}
+
+void ddg_free(ddg_t *ddg) {
+    int i;
+    if (ddg != NULL) {
+        if (ddg->dmname != NULL) free(ddg->dmname);
+        if (ddg->name != NULL) free(ddg->name);
+        if (ddg->players != NULL) {
+            i = ddg->nplayers - 1;
+            while (i >= 0) {
+                player_free(ddg->players[i]);
+                i--;
+            }            
+            free(ddg->players);
+        }
+        free(ddg);
+    }
+}
+
+void ddg_handle_d(ddg_t ddg) {
+    printf("%d-%d-%d\n", ddg.year, ddg.month, ddg.day);
+}
+
+void ddg_handle_g(ddg_t ddg) {
+    printf("%s, %s, %d-%d-%d, %d player(s)\n", ddg.name, ddg.dmname, ddg.year, ddg.month, ddg.day, ddg.nplayers);
+}
+
+void ddg_handle_m(ddg_t ddg) {
+    printf("%s", ddg.dmname);
+}
+
+void ddg_handle_n(ddg_t ddg) {
+    printf("%s", ddg.name);
+}
+
+void ddg_handle_p(ddg_t ddg) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_p(*(ddg.players[i]));
+        i--;
+    }
+}
+
+void ddg_handle_pa(ddg_t ddg, int ac) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_pa(*(ddg.players[i]), ac);
+        i--;
+    }
+}
+
+void ddg_handle_page(ddg_t ddg, int ac) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_page(*(ddg.players[i]), ac);
+        i--;
+    }
+}
+
+void ddg_handle_pagt(ddg_t ddg, int ac) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_pagt(*(ddg.players[i]), ac);
+        i--;
+    }
+}
+
+void ddg_handle_pale(ddg_t ddg, int ac) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_pale(*(ddg.players[i]), ac);
+        i--;
+    }
+}
+
+void ddg_handle_palt(ddg_t ddg, int ac) {
+    int i;
+    i = ddg.nplayers - 1;
+    while (i >= 0) {
+        player_handle_palt(*(ddg.players[i]), ac);
+        i--;
+    }
+}
