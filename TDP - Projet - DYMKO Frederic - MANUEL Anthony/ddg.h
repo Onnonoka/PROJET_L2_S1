@@ -151,8 +151,6 @@ void ddg_handle_phle(ddg_t ddg, int hp);
  * */
 void ddg_handle_phlt(ddg_t ddg, int hp);
 
-
-
 /**
  * *Handles the pn command for all the players of a DDG.
  * *\param ddg The DDG.
