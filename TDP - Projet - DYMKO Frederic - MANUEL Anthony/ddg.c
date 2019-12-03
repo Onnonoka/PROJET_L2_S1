@@ -2,7 +2,6 @@
     #define STD_H
     #include <stdio.h>
     #include <stdlib.h>
-    #include <stdbool.h>
 #endif
 #include "ddg.h"
 

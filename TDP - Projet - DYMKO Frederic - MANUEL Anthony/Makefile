@@ -4,7 +4,7 @@ LDFLAGS = `pkg-config libxml-2.0 --libs-only-L`
 LDLIBS = `pkg-config libxml-2.0 --libs-only-l`
 RM = rm -fv
 
-all: main.out
+all: ddgm.out
 
 player.o: player.c 
 	$(CC) $(CFLAGS) -c -o $@ $< $(LDFLAGS) $(LDLIBS)
@@ -12,8 +12,11 @@ player.o: player.c
 ddg.o: ddg.c
 	$(CC) $(CFLAGS) -c -o $@ $< $(LDFLAGS) $(LDLIBS)
 
-main.out: ddgm.c ddg.o player.o
+ddgm.out: ddgm.c ddg.o player.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) $(LDLIBS)
+
+start:
+	valgrind ./ddgm.out ./ddg.xml
 
 clean:
 	$(RM) *.out
