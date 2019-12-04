@@ -48,7 +48,17 @@ actions = {
   },
 
   //----------------------------------------------------------- CurrenciesUI ---
-
+  changeCryptoData(data) {
+    let currentTabValues = Object.values(dataCoinlayerList.crypto);
+    let currentTabKey = Object.keys(dataCoinlayerList.crypto);
+    let currentTab;
+    currentTabValues.forEach(function (element, index) {
+      if (element.name_full.search(data.e) != -1) {
+        currentTab.push(currentTabKey[index]);
+      }
+    });
+    console.log(currentTabValues, currentTabKey);
+  },
   // TODO: ajoutez vos fonctions...
 
   //----------------------------------------------- CurrenciesUI et WalletUI ---
