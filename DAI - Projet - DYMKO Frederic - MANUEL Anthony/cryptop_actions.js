@@ -53,11 +53,12 @@ actions = {
     let currentTabKey = Object.keys(dataCoinlayerList.crypto);
     let currentTab = new Array;
     currentTabValues.forEach(function (element, index) {
-      if (element.name_full.search(data.e) != -1) {
-        currentTab.push(currentTabKey[index]);
+      if (element.name.search(data.value) != -1) {
+        currentTab.push([currentTabKey[index], currentTabValues[index]]);
       }
     });
-    //model.samPresent({changeCryptoData: currentTab});
+    console.log(currentTabValues, '\n', currentTab);
+    //model.samPresent({do: 'changeCryptoData', cryptoTab: currentTab});
   },
   // TODO: ajoutez vos fonctions...
 

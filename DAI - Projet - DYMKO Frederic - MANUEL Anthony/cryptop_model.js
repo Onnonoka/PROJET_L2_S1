@@ -59,7 +59,10 @@ model = {
         }
       } break;
 
-
+      
+      case 'changeCryptoData': {
+        this.data.offline.list = data.do.cryptoTab;
+      } break;
       // TODO: ajoutez des cas répondant à vos actions...
 
 

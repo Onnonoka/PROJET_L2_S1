@@ -99,7 +99,7 @@ view = {
             <span class="input-group-text">Filtres : </span>
           </div>
           <input value="coin" id="filterText" type="text" class="form-control"
-            placeholder="code ou nom..." onchange="actions.changeCryptoData({e: event})"/>
+            placeholder="code ou nom..." onchange="actions.changeCryptoData({value: value})"/>
           <div class="input-group-append">
             <span class="input-group-text">Prix &gt; </span>
           </div>
