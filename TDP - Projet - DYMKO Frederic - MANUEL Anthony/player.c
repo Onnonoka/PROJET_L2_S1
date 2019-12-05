@@ -35,29 +35,14 @@ player_t *player_create() {
     /*
     Traitement
     */
-    printf("The player name: ");
-    scanf("%s", player->name);
-
-    printf("The character class: ");
-    scanf("%s", player->class);
-
-    printf("The character armor class: ");
-    scanf("%d", &player->ac);
-
-    printf("The character hit point : ");
-    scanf("%d", &player->hp);
-
-    printf("The character cooper pieces: ");
-    scanf("%d", &player->cp);
-
-    printf("The character silver pieces: ");
-    scanf("%d", &player->sp);
-
-    printf("The character gold pieces: ");
-    scanf("%d", &player->gp);
-
-    printf("The character name: ");
-    scanf("%s", player->cname);
+    player->name = '\0';
+    player->class = '\0';
+    player->ac = 0;
+    player->hp = 0;
+    player->cp = 0;
+    player->sp = 0;
+    player->gp = 0;
+    player->cname = '\0';
 
     return player;
 }
