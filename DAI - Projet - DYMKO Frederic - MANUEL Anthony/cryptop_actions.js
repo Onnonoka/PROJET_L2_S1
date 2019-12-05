@@ -58,7 +58,7 @@ actions = {
       }
     });
     console.log(currentTabValues, '\n', currentTab);
-    //model.samPresent({do: 'changeCryptoData', cryptoTab: currentTab});
+    //model.samPresent({do: 'changeCryptoData', cryptoTab: currentTab, value : data.value});
   },
   // TODO: ajoutez vos fonctions...
 

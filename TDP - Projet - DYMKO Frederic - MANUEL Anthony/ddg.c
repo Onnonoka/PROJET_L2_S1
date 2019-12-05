@@ -42,12 +42,10 @@ ddg_t *ddg_create() {
     /*
     Traitement
     */
-   printf("The date (jj-mm-aa): ");
-   scanf("%d-%d-%d", &ddg->day, &ddg->month, &ddg->year);
-
-   printf("The dungeon master name :");
-   scanf("%s", ddg->dmname);
-
+   ddg->day = 0;
+   ddg->month = 0;
+   ddg->year = 0;
+   ddg->dmname = '\0';
    ddg->nplayers = 0;
    ddg->players = NULL;
 

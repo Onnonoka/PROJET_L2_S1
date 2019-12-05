@@ -9,6 +9,7 @@
 int main(int argc, char *argv[]) {
     xmlDocPtr xmlFile;
     xmlNodePtr xmlFileNode;
+    ddg_t ddg;
     if (argc != 2) {
         fprintf(stderr, "%s: Invalid number of arguments\n", argv[0]);
         return -1;
@@ -20,12 +21,27 @@ int main(int argc, char *argv[]) {
         return -1;
     }
     xmlFileNode = xmlDocGetRootElement(xmlFile);
+    if (xmlFileNode == NULL) {
+        fprintf(stderr, "Le fichier %s est vide.", argv[1]);
+        fprintf(stderr, "%s: Unable to parse the document", argv[0]);
+        return -1;
+    }
+    while (xmlFileNode->next != NULL && xmlFileNode->parent != NULL) {
+        if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"ddg")) {
+            ddg.name = xmlGetProp(xmlFileNode, (xmlChar*)"name");
+        } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"day")) {
+            ddg.day = xmlFileNode->content;
+        } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"month")) {
+            ddg.month = xmlFileNode->content;
+        } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"year")) {
+            ddg.year = xmlFileNode->content;
+        } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"dmname")) {
+            ddg.dmname = xmlFileNode->content;
+        } /*else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"player")) {
+            ddg_add_player()
+        }*/
+    }
     
-    /*
-    *   LES COMMANDES SUIVANTES SONT A SUPRIMER
-    *   Elles sont utilisés pour la compilation
-    */
-    printf("%s", xmlFileNode->name);
     
     return 0;
 }

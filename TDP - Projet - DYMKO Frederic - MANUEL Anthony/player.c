@@ -65,7 +65,7 @@ player_t *player_create() {
 void player_free(player_t *player) {
     if (player != NULL) {
         /*
-        libere la memoir allouer dans player
+        libere la memoire allouer dans player
         */
         if (player->class != NULL) free(player->class);
         if (player->cname != NULL) free(player->cname);
@@ -141,10 +141,13 @@ void player_handle_pc(player_t player, const char *class) {
         while (player.class[i + j] != '\0' && class[j] != '\0' && player.class[i + j] == class[j]) {
             j++;
         }
-        if (player.class[i + j] != '\0' && class[j] != '\0') {
-            verif = 1;
-        } else if (player.class[i + j] == '\0') {
+        if (player.class[i + j] == '\0') {
             lenght = 1;
+        }
+        if (class[j] != '\0') {
+            verif = 0;
+        } else {
+            verif = 1;
         }
         i++;
     }
@@ -174,10 +177,13 @@ void player_handle_pcn(player_t player, const char *cname) {
         while (player.cname[i + j] != '\0' && cname[j] != '\0' && player.cname[i + j] == cname[j]) {
             j++;
         }
-        if (player.cname[i + j] != '\0' && cname[j] != '\0') {
-            verif = 1;
-        } else if (player.cname[i + j] == '\0') {
+        if (player.cname[i + j] == '\0') {
             lenght = 1;
+        }
+        if (cname[j] != '\0') {
+            verif = 0;
+        } else {
+            verif = 1;
         }
         i++;
     }
@@ -237,10 +243,13 @@ void player_handle_pn(player_t player, const char *name) {
         while (player.name[i + j] != '\0' && name[j] != '\0' && player.name[i + j] == name[j]) {
             j++;
         }
-        if (player.name[i + j] != '\0' && name[j] != '\0') {
-            verif = 1;
-        } else if (player.name[i + j] == '\0') {
+        if (player.name[i + j] == '\0') {
             lenght = 1;
+        }
+        if (name[j] != '\0') {
+            verif = 0;
+        } else {
+            verif = 1;
         }
         i++;
     }
