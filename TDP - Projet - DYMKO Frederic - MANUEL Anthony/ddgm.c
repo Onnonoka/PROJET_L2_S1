@@ -2,8 +2,8 @@
     #define STD_H
     #include <stdio.h>
     #include <stdlib.h>
+    #include <string.h>
 #endif
-#include <string.h>
 #include <libxml/parser.h>
 #include "ddg.h"
 
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     xmlNodePtr xmlFileNode;
     ddg_t *ddg;
     player_t *player;
-    char *commande, *value, *saisie, *buffer;
+    char *commande, *value, *saisie;
     int exit, i, j, arg2;
 
     if (argc != 2) {
@@ -71,11 +71,11 @@ int main(int argc, char *argv[]) {
         if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"ddg") == 0) {
             ddg->name = (char*)xmlGetProp(xmlFileNode, (xmlChar*)"name");
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"day") == 0) {
-            /*ddg->day = (int)strtol((char*)xmlFileNode->content, NULL, 10);*/
+            /*ddg->day = strtol((char*)xmlNodeListGetString(xmlFile, xmlFileNode, 0), NULL, 10);*/
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"month") == 0) {
-            /*ddg->month = (int)strtol((char*)xmlFileNode->content, NULL, 10);*/
+            /*ddg->month = strtol((char*)xmlFileNode->content, NULL, 10);*/
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"year") == 0) {
-            /*ddg->year = (int)strtol((char*)xmlFileNode->content, NULL, 10);*/
+            /*ddg->year = strtol((char*)xmlFileNode->content, NULL, 10);*/
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"dmname") == 0) {
             printf("%s\n", (char*)xmlFileNode);
             /*ddg->dmname = (char*)xmlFileNode->content;*/
@@ -88,19 +88,19 @@ int main(int argc, char *argv[]) {
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"player") == 0) {
             player->name = (char*)xmlGetProp(xmlFileNode, (xmlChar*)"name");
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"ac") == 0) {
-            /*player->ac = (int)strtol((char*)xmlFileNode->content, NULL, 10);*/
+            /*player->ac = strtol((char*)xmlFileNode->content, NULL, 10);*/
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"class") == 0) {
             player->class = (char*)xmlFileNode->content;
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"cname") == 0) {
             player->cname = (char*)xmlFileNode->content;
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"hp") == 0) {
-            /*player->hp = (int)strtol((char*)xmlFileNode->content, NULL, 10);*/
+            /*player->hp = strtol((char*)xmlFileNode->content, NULL, 10);*/
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"cp") == 0) {
-            /*player->cp = (int)strtol((char*)xmlFileNode->content, NULL, 10);*/
+            /*player->cp = strtol((char*)xmlFileNode->content, NULL, 10);*/
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"gp") == 0) {
-            /*player->gp = (int)strtol((char*)xmlFileNode->content, NULL, 10);*/
+            /*player->gp = strtol((char*)xmlFileNode->content, NULL, 10);*/
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"sp") == 0) {
-            /*player->sp = (int)strtol((char*)xmlFileNode->content, NULL, 10);*/
+            /*player->sp = strtol((char*)xmlFileNode->content, NULL, 10);*/
         }
 
 
@@ -120,42 +120,38 @@ int main(int argc, char *argv[]) {
         saisie = malloc(sizeof(char));
         commande = malloc(sizeof(char));
         value = malloc(sizeof(char));
-        buffer = malloc(sizeof(char));
         value[0] = '\0';
         printf("DDG> ");
-        saisie = fgets(buffer, 18, stdin);
+        fgets(saisie, 18, stdin);
         i = 0;
         j = 0;
         arg2 = 0;
         while (saisie[i] != '\0' && saisie[i] != '\n') {
             if (arg2) {
-                if (saisie[i] == ' ') {
-                    value = "ERROR";
-                } else {
-                    value[j] = saisie[i];
-                    j++;
-                }
+                value[j] = saisie[i];
+                j++;
+                value = realloc(value, sizeof(char) * j);
+                value[j] = '\0';
             } else {
                 if (saisie[i] == ' ') {
-                    commande[j] = '\0';
                     arg2 = 1;
                     j = 0;
                 } else {
                     commande[j] = saisie[i];
                     j++;
+                    commande = realloc(commande, sizeof(char) * j);
+                    commande[j] = '\0';
                 }
             }
             i++;
         }
-        value[j] = '\0';
-        printf("%s", commande);
         if (strcmp(commande, "d") == 0) {
             ddg_handle_d(*ddg);
         } else if (strcmp(commande, "g") == 0) {
             ddg_handle_g(*ddg);
         } else if (strcmp(commande, "m") == 0) {
             ddg_handle_m(*ddg);
-        } else if (strcmp(commande, "h ") == 0) {
+        } else if (strcmp(commande, "h") == 0) {
             display_h();
         } else if (strcmp(commande, "n") == 0) {
             ddg_handle_n(*ddg);
@@ -192,13 +188,15 @@ int main(int argc, char *argv[]) {
         } else if (strcmp(commande, "pa") == 0) {
             ddg_handle_pa(*ddg, strtol(value, NULL, 10));
         } else {
-            printf("./ddgm.out: Invalid command\n");
+            printf("%s: Invalid command\n", argv[0]);
         }
         free(commande);
         free(value);
     } while (!exit);
     free(saisie);
     ddg_free(ddg);
+    xmlCleanupParser();
+    xmlFreeDoc(xmlFile);
     
     return 0;
 }

@@ -28,16 +28,6 @@ ddg_t *ddg_create() {
     */
     ddg = malloc(sizeof(ddg_t));
     if (ddg == NULL) return NULL;
-    ddg->dmname = malloc(sizeof(char));
-    if (ddg->dmname == NULL) {
-        ddg_free(ddg);
-        return NULL;
-    }
-    ddg->name = malloc(sizeof(char));
-    if (ddg->name == NULL) {
-        ddg_free(ddg);
-        return NULL;
-    }
 
     /*
     Traitement
@@ -45,7 +35,7 @@ ddg_t *ddg_create() {
    ddg->day = 0;
    ddg->month = 0;
    ddg->year = 0;
-   ddg->dmname = '\0';
+   ddg->dmname = NULL;
    ddg->nplayers = 0;
    ddg->players = NULL;
 
@@ -87,11 +77,16 @@ void ddg_handle_g(ddg_t ddg) {
 }
 
 void ddg_handle_m(ddg_t ddg) {
-    printf("%s", ddg.dmname);
+    printf("%s\n", ddg.dmname);
+    
 }
 
 void ddg_handle_n(ddg_t ddg) {
-    printf("%s", ddg.name);
+    if (ddg.name != NULL) {
+        printf("%s\n", ddg.name);
+    } else {
+        printf("(null)");
+    }
 }
 
 void ddg_handle_p(ddg_t ddg) {
