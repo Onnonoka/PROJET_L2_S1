@@ -42,9 +42,8 @@ int main(int argc, char *argv[]) {
     xmlNodePtr xmlFileNode;
     ddg_t *ddg;
     player_t *player;
-    int prof;
-    /*char *commande, *value, *saisie;
-    int exit, i, j, arg2;*/
+    char *commande, *value, *saisie;
+    int exit, i, j, arg2;
 
     if (argc != 2) {
         fprintf(stderr, "%s: Invalid number of arguments\n", argv[0]);
@@ -69,7 +68,6 @@ int main(int argc, char *argv[]) {
     }
     
     player = player_create();
-    prof = 0;
     while (xmlFileNode != NULL) {
         if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"ddg") == 0) {
             ddg->name = (char*)xmlGetProp(xmlFileNode, (xmlChar*)"name");
@@ -81,8 +79,6 @@ int main(int argc, char *argv[]) {
             ddg->year = strtol((char*)xmlFileNode->children->content, NULL, 10);
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"dmname") == 0) {
             ddg->dmname = (char*)xmlFileNode->children->content;
-        } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"players") == 0) {
-            prof = 1;
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"player") == 0) {
             player->name = (char*)xmlGetProp(xmlFileNode, (xmlChar*)"name");
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"ac") == 0) {
@@ -107,18 +103,19 @@ int main(int argc, char *argv[]) {
         } else if (xmlFileNode->next != NULL) {
             xmlFileNode = xmlFileNode->next;
         } else {
+            if (xmlStrcmp(xmlFileNode->parent->name, (xmlChar*)"player") == 0) {
+                ddg_add_player(ddg, player);
+                player = player_create();
+            }
             xmlFileNode = xmlFileNode->parent->next;
         }
     }
-    ddg_handle_g(*ddg);
 
-
-
-    
-    /*exit = 0;
+    exit = 0;
     do {
         saisie = malloc(sizeof(char));
         commande = malloc(sizeof(char));
+        value = malloc(sizeof(char));
         value[0] = '\0';
         printf("DDG> ");
         fgets(saisie, 18, stdin);
@@ -162,9 +159,9 @@ int main(int argc, char *argv[]) {
             ddg_handle_pcn(*ddg, value);
         } else if (strcmp(commande, "pc") == 0) {
             ddg_handle_pc(*ddg, value);
-        }  else if (strcmp(commande, "pn") == 0) {
+        } else if (strcmp(commande, "pn") == 0) {
             ddg_handle_pn(*ddg, value);
-        }  else if (strcmp(commande, "p") == 0) {
+        } else if (strcmp(commande, "p") == 0) {
             ddg_handle_p(*ddg);
         } else if (strcmp(commande, "phge") == 0) {
             ddg_handle_page(*ddg, strtol(value, NULL, 10));
@@ -196,6 +193,6 @@ int main(int argc, char *argv[]) {
     ddg_free(ddg);
     xmlCleanupParser();
     xmlFreeDoc(xmlFile);
-    */
+    
     return 0;
 }
