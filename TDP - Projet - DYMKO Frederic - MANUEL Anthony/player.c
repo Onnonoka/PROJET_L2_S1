@@ -57,7 +57,7 @@ void player_handle_p(player_t player) {
     printf("%s (%s), ", player.name, player.cname);
     printf("%s, ", player.class);
     printf("AC: %d, HP: %d, ",player.ac, player.hp);
-    printf("GP: %f ", (player.gp + (player.sp * 0.1) + (player.cp * 0.01)));
+    printf("GP: %2.2f ", (player.gp + (player.sp * 0.1) + (player.cp * 0.01)));
     printf("(GP: %d, SP: %d, CP: %d)\n", player.gp, player.sp, player.cp);
 }
 

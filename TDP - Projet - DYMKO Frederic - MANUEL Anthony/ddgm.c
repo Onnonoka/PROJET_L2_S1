@@ -32,7 +32,7 @@ void display_h() {
 }
 
 void display_v() {
-    printf("DDGM (Dungeons and Dragons Game Manager) 1\n\n");
+    printf("DDGM (Dungeons and Dragons Game Manager) 23\n\n");
     printf("Copyright (C) 2019 DYMKO frederic and MANUEL Anthony.\n\n");
     printf("Written by DYMKO Frederic <dymko.frederic@univ-pau.fr> and MANUEL Anthony <manuel.anthony@univ-pau.fr.\n");
 }
@@ -155,14 +155,14 @@ int main(int argc, char *argv[]) {
             display_v();
         } else if (strcmp(commande, "q") == 0) {
             exit = 1;
+        } else if (strcmp(commande, "p") == 0) {
+            ddg_handle_p(*ddg);
         } else if (strcmp(commande, "pcn") == 0) {
             ddg_handle_pcn(*ddg, value);
         } else if (strcmp(commande, "pc") == 0) {
             ddg_handle_pc(*ddg, value);
         } else if (strcmp(commande, "pn") == 0) {
             ddg_handle_pn(*ddg, value);
-        } else if (strcmp(commande, "p") == 0) {
-            ddg_handle_p(*ddg);
         } else if (strcmp(commande, "phge") == 0) {
             ddg_handle_page(*ddg, strtol(value, NULL, 10));
         } else if (strcmp(commande, "phgt") == 0) {
@@ -189,7 +189,9 @@ int main(int argc, char *argv[]) {
         free(commande);
         free(value);
     } while (!exit);
+    
     free(saisie);
+
     ddg_free(ddg);
     xmlCleanupParser();
     xmlFreeDoc(xmlFile);
