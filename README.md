@@ -9,6 +9,8 @@
     - [x] ddg.c
     - [ ] ddgm.c
   - **Warning and Error**
+    - *Warning* ddgm.c
+      > Il ne reste que les condition d'ereur a faire et la liberation de la memoire
     
     
   **ADO** : [Projet unite de calcul](http://ecariou.perso.univ-pau.fr/cours/archi/sujet-projet.html)
@@ -18,7 +20,7 @@
     - [ ] Partie 3
   - **Warning and Error**
     - *Warning* partie 1.cir
-      > Incertitude sur la completute de l'exercice parti 1
+      > unité de calcul PARTIE 2: Le resultat du calcul ne reste pas affiché
 
 
   **DAI** : [Projet Portfolio Cryptos](http://bjobard.perso.univ-pau.fr/Cours/DAI/Projet_cryptos.html)
