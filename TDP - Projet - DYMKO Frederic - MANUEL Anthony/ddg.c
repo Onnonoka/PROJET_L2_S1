@@ -28,15 +28,15 @@ ddg_t *ddg_create() {
     */
     ddg = malloc(sizeof(ddg_t));
     if (ddg == NULL) return NULL;
-
     /*
     Traitement
     */
    ddg->day = 0;
    ddg->month = 0;
    ddg->year = 0;
-   ddg->dmname = NULL;
    ddg->nplayers = 0;
+   ddg->dmname = NULL;
+   ddg->name = NULL;
    ddg->players = NULL;
 
    return ddg;

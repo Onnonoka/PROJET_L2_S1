@@ -42,8 +42,9 @@ int main(int argc, char *argv[]) {
     xmlNodePtr xmlFileNode;
     ddg_t *ddg;
     player_t *player;
-    char *commande, *value, *saisie;
-    int exit, i, j, arg2;
+    int prof;
+    /*char *commande, *value, *saisie;
+    int exit, i, j, arg2;*/
 
     if (argc != 2) {
         fprintf(stderr, "%s: Invalid number of arguments\n", argv[0]);
@@ -66,41 +67,38 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "I/O warning : failed to alloc memory to \"ddg\"\n");
         return -1;
     }
-    player = NULL;
+    
+    player = player_create();
+    prof = 0;
     while (xmlFileNode != NULL) {
         if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"ddg") == 0) {
             ddg->name = (char*)xmlGetProp(xmlFileNode, (xmlChar*)"name");
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"day") == 0) {
-            /*ddg->day = strtol((char*)xmlNodeListGetString(xmlFile, xmlFileNode, 0), NULL, 10);*/
-        } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"month") == 0) {
-            /*ddg->month = strtol((char*)xmlFileNode->content, NULL, 10);*/
+            ddg->day = strtol((char*)xmlFileNode->children->content, NULL, 10);
+        } else if(xmlStrcmp(xmlFileNode->name, (xmlChar*)"month") == 0) {
+            ddg->month = strtol((char*)xmlFileNode->children->content, NULL, 10);
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"year") == 0) {
-            /*ddg->year = strtol((char*)xmlFileNode->content, NULL, 10);*/
+            ddg->year = strtol((char*)xmlFileNode->children->content, NULL, 10);
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"dmname") == 0) {
-            printf("%s\n", (char*)xmlFileNode);
-            /*ddg->dmname = (char*)xmlFileNode->content;*/
+            ddg->dmname = (char*)xmlFileNode->children->content;
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"players") == 0) {
-            player = player_create();
-            if (player == NULL) {
-                fprintf(stderr, "I/O warning : failed to alloc memory to \"player\"\n");
-                return -1;
-            }
+            prof = 1;
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"player") == 0) {
             player->name = (char*)xmlGetProp(xmlFileNode, (xmlChar*)"name");
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"ac") == 0) {
-            /*player->ac = strtol((char*)xmlFileNode->content, NULL, 10);*/
+            player->ac = strtol((char*)xmlFileNode->children->content, NULL, 10);
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"class") == 0) {
-            player->class = (char*)xmlFileNode->content;
+            player->class = (char*)xmlFileNode->children->content;
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"cname") == 0) {
-            player->cname = (char*)xmlFileNode->content;
+            player->cname = (char*)xmlFileNode->children->content;
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"hp") == 0) {
-            /*player->hp = strtol((char*)xmlFileNode->content, NULL, 10);*/
+            player->hp = strtol((char*)xmlFileNode->children->content, NULL, 10);
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"cp") == 0) {
-            /*player->cp = strtol((char*)xmlFileNode->content, NULL, 10);*/
+            player->cp = strtol((char*)xmlFileNode->children->content, NULL, 10);
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"gp") == 0) {
-            /*player->gp = strtol((char*)xmlFileNode->content, NULL, 10);*/
+            player->gp = strtol((char*)xmlFileNode->children->content, NULL, 10);
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"sp") == 0) {
-            /*player->sp = strtol((char*)xmlFileNode->content, NULL, 10);*/
+            player->sp = strtol((char*)xmlFileNode->children->content, NULL, 10);
         }
 
 
@@ -109,17 +107,18 @@ int main(int argc, char *argv[]) {
         } else if (xmlFileNode->next != NULL) {
             xmlFileNode = xmlFileNode->next;
         } else {
-            if (xmlStrcmp(xmlFileNode->parent->name, (xmlChar*)"players") == 0) {
-                ddg_add_player(ddg, player);
-            }
             xmlFileNode = xmlFileNode->parent->next;
         }
     }
-    exit = 0;
+    ddg_handle_g(*ddg);
+
+
+
+    
+    /*exit = 0;
     do {
         saisie = malloc(sizeof(char));
         commande = malloc(sizeof(char));
-        value = malloc(sizeof(char));
         value[0] = '\0';
         printf("DDG> ");
         fgets(saisie, 18, stdin);
@@ -197,6 +196,6 @@ int main(int argc, char *argv[]) {
     ddg_free(ddg);
     xmlCleanupParser();
     xmlFreeDoc(xmlFile);
-    
+    */
     return 0;
 }
