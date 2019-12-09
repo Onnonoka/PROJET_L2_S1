@@ -1,6 +1,6 @@
 const initialModel2 = {
   config: {  //==================================== Configuration principale ===
-    authors : 'par DYMKO Frédéric et MANUEL Anthony',  // remplacez par vos noms
+    authors : 'par Bruno Jobard et lui-même',  // remplacez par vos noms
     debug   : true,       // afficher les traces de debugage ?
     dataMode: 'offline',  // soit 'online' ou 'offline'
     coins: {  //_________________ cryptos dans le portfolio de l'utilisateur ___

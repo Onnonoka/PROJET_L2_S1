@@ -60,11 +60,6 @@ model = {
       } break;
 
 
-      case 'changeCryptoData': {
-        this.hasChanged.crypto.filter = true;
-        this.ui.currenciesCard.tabs.cryptos.filters.text = data.value;
-        this.data.offline.list = data.do.cryptoTab;
-      } break;
       // TODO: ajoutez des cas répondant à vos actions...
 
 

@@ -48,18 +48,7 @@ actions = {
   },
 
   //----------------------------------------------------------- CurrenciesUI ---
-  changeCryptoData(data) {
-    let currentTabValues = Object.values(dataCoinlayerList.crypto);
-    let currentTabKey = Object.keys(dataCoinlayerList.crypto);
-    let currentTab = new Array;
-    currentTabValues.forEach(function (element, index) {
-      if (element.name.search(data.value) != -1) {
-        currentTab.push([currentTabKey[index], currentTabValues[index]]);
-      }
-    });
-    console.log(currentTabValues, '\n', currentTab);
-    //model.samPresent({do: 'changeCryptoData', cryptoTab: currentTab, value : data.value});
-  },
+
   // TODO: ajoutez vos fonctions...
 
   //----------------------------------------------- CurrenciesUI et WalletUI ---
