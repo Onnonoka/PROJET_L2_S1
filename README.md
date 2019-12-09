@@ -16,11 +16,9 @@
   **ADO** : [Projet unite de calcul](http://ecariou.perso.univ-pau.fr/cours/archi/sujet-projet.html)
   - **TO DO**
     - [x] Partie 1
-    - [ ] Partie 2
+    - [x] Partie 2
     - [ ] Partie 3
   - **Warning and Error**
-    - *Warning* partie 1.cir
-      > unité de calcul PARTIE 2: Le resultat du calcul ne reste pas affiché
 
 
   **DAI** : [Projet Portfolio Cryptos](http://bjobard.perso.univ-pau.fr/Cours/DAI/Projet_cryptos.html)
