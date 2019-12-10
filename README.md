@@ -7,10 +7,8 @@
     - [x] player.c
     - [x] ddg.h
     - [x] ddg.c
-    - [ ] ddgm.c
+    - [x] ddgm.c
   - **Warning and Error**
-    - *Warning* ddgm.c
-      > Il ne reste que les condition d'ereur a faire et la liberation de la memoire
     
     
   **ADO** : [Projet unite de calcul](http://ecariou.perso.univ-pau.fr/cours/archi/sujet-projet.html)
