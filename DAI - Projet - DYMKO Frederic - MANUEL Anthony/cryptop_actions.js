@@ -49,7 +49,7 @@ actions = {
 
   //----------------------------------------------------------- CurrenciesUI ---
 
-  // TODO: ajoutez vos fonctions...
+  /*update la bite*/
 
   //----------------------------------------------- CurrenciesUI et WalletUI ---
   changeTab(data) {
