@@ -34,7 +34,7 @@ void display_h() {
 
 void display_v() {
     printf("DDGM (Dungeons and Dragons Game Manager) 23\n\n");
-    printf("Copyright (C) 2019 DYMKO frederic and MANUEL Anthony.\n\n");
+    printf("Copyright (C) 2019 DYMKO Frederic and MANUEL Anthony.\n\n");
     printf("Written by DYMKO Frederic <dymko.frederic@univ-pau.fr> and MANUEL Anthony <manuel.anthony@univ-pau.fr.\n");
 }
 
@@ -80,8 +80,8 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "ALLOC warning : failed to alloc memory to \"ddg\"\n");
         return -1;
     }
-    
-    player = player_create();
+
+    player = NULL;
     while (xmlFileNode != NULL) {
         if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"ddg") == 0) {
             ddg->name = (char*)xmlGetProp(xmlFileNode, (xmlChar*)"name");
@@ -94,6 +94,10 @@ int main(int argc, char *argv[]) {
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"dmname") == 0) {
             ddg->dmname = (char*)xmlFileNode->children->content;
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"player") == 0) {
+            if (player != NULL) {
+                ddg_add_player(ddg, player);
+            }
+            player = player_create();
             player->name = (char*)xmlGetProp(xmlFileNode, (xmlChar*)"name");
         } else if (xmlStrcmp(xmlFileNode->name, (xmlChar*)"ac") == 0) {
             player->ac = strtol((char*)xmlFileNode->children->content, NULL, 10);
@@ -117,14 +121,12 @@ int main(int argc, char *argv[]) {
         } else if (xmlFileNode->next != NULL) {
             xmlFileNode = xmlFileNode->next;
         } else {
-            if (xmlStrcmp(xmlFileNode->parent->name, (xmlChar*)"player") == 0) {
-                ddg_add_player(ddg, player);
-                player = player_create();
-            }
             xmlFileNode = xmlFileNode->parent->next;
         }
     }
-
+    if (player != NULL) {
+        ddg_add_player(ddg, player);
+    }
     exit = 0;
 
     saisie = malloc(sizeof(char) * 19);
@@ -229,6 +231,7 @@ int main(int argc, char *argv[]) {
 
     ddg_free(ddg);
     xmlCleanupParser();
+    free(xmlFileNode);
     xmlFreeDoc(xmlFile);
     
     return 0;
