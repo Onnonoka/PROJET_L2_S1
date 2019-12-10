@@ -60,6 +60,8 @@ actions = {
 
   // TODO: ajoutez vos fonctions...
 
+  //Yo tout le monde c'est la fonction.
+
   //---------------------------------------------------------- PreferencesUI ---
 
   changeTarget(data) {
