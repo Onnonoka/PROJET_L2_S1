@@ -48,7 +48,6 @@ void ddg_free(ddg_t *ddg) {
         /*
         libere la memoir allouer dans ddg
         */
-        if (ddg->dmname != NULL) free(ddg->dmname);
         if (ddg->name != NULL) free(ddg->name);
         if (ddg->players != NULL) {
             i = ddg->nplayers - 1;

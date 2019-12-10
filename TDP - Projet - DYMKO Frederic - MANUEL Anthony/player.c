@@ -38,8 +38,6 @@ void player_free(player_t *player) {
         /*
         libere la memoire allouer dans player
         */
-        if (player->class != NULL) free(player->class);
-        if (player->cname != NULL) free(player->cname);
         if (player->name != NULL) free(player->name);
 
         /*

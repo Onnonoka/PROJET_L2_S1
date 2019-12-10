@@ -6,12 +6,14 @@ view = {
 
   // Injecte le HTML dans une balise de la page Web.
   samDisplay(sectionId, representation) {
+    console.log("samDisply");
     const section = document.getElementById(sectionId);
     section.innerHTML = representation;
   },
 
   // Renvoit le HTML de l'interface complète de l'application
   appUI(model, state) {
+    console.log("appUI");
     const configsChooserHTML = this.configsChooserUI();
     return `
     <div class="container">
@@ -36,6 +38,7 @@ view = {
   },
 
   configsChooserUI() {
+    console.log("configsCooserUI");
     const options = Object.keys(configs).map(v => {
       const selected = configsSelected == v ? 'selected="selected"' : '';
       return `
@@ -64,6 +67,7 @@ view = {
   },
 
   currenciesUI(model, state) {
+    console.log("currenciesUI");
     const tabName = model.ui.currenciesCard.selectedTab;
     switch (tabName) {
       case 'cryptos': return this.currenciesCrytopsUI(model, state); break;
@@ -75,6 +79,7 @@ view = {
   },
 
   currenciesCrytopsUI(model, state) {
+    console.log("currenciesCryptosUI");
 
     const paginationHTML = this.paginationUI(model, state, 'cryptos');
 
@@ -99,7 +104,7 @@ view = {
             <span class="input-group-text">Filtres : </span>
           </div>
           <input value="coin" id="filterText" type="text" class="form-control"
-            placeholder="code ou nom..." />
+            placeholder="code ou nom..." onchange="actions.changeCryptoFilter({e: value})" />
           <div class="input-group-append">
             <span class="input-group-text">Prix &gt; </span>
           </div>
@@ -229,6 +234,7 @@ view = {
   },
 
   paginationUI(model, state, currency) {
+    console.log("paginationUI");
     return `
     <section id="pagination">
       <div class="row justify-content-center">
@@ -263,6 +269,7 @@ view = {
   },
 
   currenciesFiatsUI(model,state) {
+    console.log("currentciesFiatsUI");
 
     const paginationHTML = this.paginationUI(model, state, 'fiats');
 
@@ -306,6 +313,7 @@ view = {
   },
 
   preferencesUI(model, state) {
+    console.log("preferencesUI");
 
     const authors        = model.config.authors;
     const debug          = model.config.debug;
@@ -368,6 +376,7 @@ view = {
   },
 
   walletUI(model, state) {
+    console.log("walletUI");
     const tabName = model.ui.walletCard.selectedTab;
     switch (tabName) {
       case 'portfolio': return this.walletPortfolioUI(model, state); break;
@@ -379,6 +388,7 @@ view = {
   },
 
   walletPortfolioUI(model, state) {
+    console.log("walletPortfolioUI");
     return `
     <div class="card border-secondary text-center" id="wallet">
       <div class="card-header">
@@ -462,6 +472,7 @@ view = {
   },
 
   walletAjouterUI(model, state) {
+    console.log("walletAjouterUI");
     return `
     <div class="card border-secondary text-center" id="wallet">
       <div class="card-header">
