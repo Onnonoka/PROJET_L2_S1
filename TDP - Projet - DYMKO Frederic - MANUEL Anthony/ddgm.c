@@ -4,6 +4,7 @@
     #include <stdlib.h>
     #include <string.h>
 #endif
+#include <errno.h>
 #include <libxml/parser.h>
 #include "ddg.h"
 
@@ -39,18 +40,14 @@ void display_v() {
 
 char *verif_Parameter(char *value) {
     char *end;
-    end = malloc(sizeof(char));
     if (strlen(value) < 1) {
-        free(end);
         return "Missing parameter";
     }
+    errno = 0;
     strtol(value, &end, 10);
-    if (end != '\0') {
-        free(end);
+    if (errno != 0 || *end != '\0') {
         return "Invalid parameter";
     }
-    printf("%s\n", end);
-    free(end);
     return NULL;
 }
 
@@ -80,7 +77,7 @@ int main(int argc, char *argv[]) {
     }
     ddg = ddg_create();
     if (ddg == NULL) {
-        fprintf(stderr, "I/O warning : failed to alloc memory to \"ddg\"\n");
+        fprintf(stderr, "ALLOC warning : failed to alloc memory to \"ddg\"\n");
         return -1;
     }
     
@@ -130,7 +127,6 @@ int main(int argc, char *argv[]) {
 
     exit = 0;
 
-    verif = malloc(sizeof(char) * 18);
     saisie = malloc(sizeof(char) * 19);
     do {
         commande = malloc(sizeof(char));
@@ -230,7 +226,6 @@ int main(int argc, char *argv[]) {
     } while (!exit);
     
     free(saisie);
-    free(verif);
 
     ddg_free(ddg);
     xmlCleanupParser();

@@ -4,6 +4,7 @@ LDFLAGS = `pkg-config libxml-2.0 --libs-only-L`
 LDLIBS = `pkg-config libxml-2.0 --libs-only-l`
 RM = rm -fv
 EXEC = valgrind
+DEBUG = gdb --args
 
 all: ddgm.out
 
@@ -24,4 +25,7 @@ clean:
 
 clear:
 	$(RM) *.o *.out
+
+debug: ddgm.out
+	$(DEBUG) ./ddgm.out ./ddg.xml
 	
