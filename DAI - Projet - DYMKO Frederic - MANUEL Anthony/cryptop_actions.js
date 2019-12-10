@@ -49,16 +49,6 @@ actions = {
 
   //----------------------------------------------------------- CurrenciesUI ---
 
-  changeCryptoFilter(data) {
-    console.log(data);
-    let listValue = Object.values(dataCoinlayerList.crypto);
-    console.log(listValue);
-    let updatedTab = listValue.filter(v => v.name.search(data.e) !== -1);
-    console.log(updatedTab);
-
-
-    model.samPresent({do: 'changeFilter', filter: data.e, filterdTab: updatedTab});
-  },
   // TODO: ajoutez vos fonctions...
 
   //----------------------------------------------- CurrenciesUI et WalletUI ---
