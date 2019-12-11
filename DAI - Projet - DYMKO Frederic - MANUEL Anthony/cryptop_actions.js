@@ -98,6 +98,7 @@ actions = {
 
     console.log('Total is working...');
     console.log(Tab);
+    console.log(Tab[1][0].value);
 
     for(i = 0 ; i < Tab[0].length ; i++)
     {

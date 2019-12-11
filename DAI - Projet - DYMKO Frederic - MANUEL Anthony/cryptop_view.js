@@ -503,7 +503,7 @@ view = {
               <td><b>Bitcoin</b></td>
               <td class="text-right PortefolioPrix">7885.74</td>
               <td class="text-right">
-                <input type="text" onchange="actions.TotalPortefolio()" class="form-control PortefolioQte" value="1" />
+                <input type="text" onchange="actions.TotalPortefolio()" class="form-control PortefolioQte" value="1"/>
               </td>
               <td class="text-right"><span class=""><b class="PortefolioTotal">7885.74</b></span></td>
             </tr>
