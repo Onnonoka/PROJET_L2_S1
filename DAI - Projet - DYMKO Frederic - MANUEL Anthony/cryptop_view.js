@@ -95,8 +95,7 @@ view = {
       }
       let change = element.change.toFixed(3);
       change += (element.change > 1)? ' ↗' : (element.change === 0)? ' ∼' : ' ↘';
-      
-      ;
+
       dataHTML += `
         <tr class="${dataClass}">
           <td class="text-center">
