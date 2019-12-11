@@ -15,9 +15,11 @@
   - **TO DO**
     - [x] Partie 1
     - [x] Partie 2
-    - [ ] Partie 3
+    - [x] Partie 3
   - **Warning and Error**
-
+    - *Warning* 
+      > La premiere lecture memoire n'est pas oppérationnel car il y a un décalage avec le reste du
+      > circuits
 
   **DAI** : [Projet Portfolio Cryptos](http://bjobard.perso.univ-pau.fr/Cours/DAI/Projet_cryptos.html)
   - **TO DO**
