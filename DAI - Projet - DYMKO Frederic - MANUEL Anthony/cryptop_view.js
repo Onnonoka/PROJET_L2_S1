@@ -76,7 +76,7 @@ view = {
 
   currenciesCrytopsUI(model, state) {
 
-    const list = state.data.cryptos.filtered;
+    const list = state.data.cryptos.filtered.map(x => x);
     const pagination = model.ui.currenciesCard.tabs.cryptos.pagination;
     let position = pagination.rowsPerPage[pagination.rowsPerPageIndex];
     let dataHTML = '';
@@ -106,7 +106,6 @@ view = {
         </tr>
       `
     }
-    
     const paginationHTML = this.paginationUI(model, state, 'cryptos');
 
     return `

@@ -176,7 +176,7 @@ state = {
   updateCryptosFiltered(model) {
     const filters = model.ui.currenciesCard.tabs.cryptos.filters;
     const cFiltered = Object.values(this.data.cryptos.list).filter( v => {
-      if (v.name.search(filters.text) === -1 || v.price < filters.price) {
+      if (v.name.toLowerCase().search(filters.text.toLowerCase()) === -1 || v.price < filters.price) {
         return false;
       }
       return true;
