@@ -17,7 +17,7 @@
     - [x] Partie 2
     - [x] Partie 3
   - **Warning and Error**
-    - *Warning* 
+    - *Warning* Partie 3:
       > La premiere lecture memoire n'est pas oppérationnel car il y a un décalage avec le reste du
       > circuits
 
