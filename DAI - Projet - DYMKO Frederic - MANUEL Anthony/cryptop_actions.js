@@ -85,4 +85,26 @@ actions = {
 
   // TODO: ajoutez vos fonctions...
 
-};
+  TotalPortefolio() // Met a jour tous les totaux.
+  {
+    let Tab = [];
+    let Total = document.getElementById("JeSuisTotal");
+    let somme = 0;
+    let i = 0;
+
+    Tab[0] = document.getElementsByClassName("PortefolioPrix");
+    Tab[1] = document.getElementsByClassName("PortefolioQte");
+    Tab[2] = document.getElementsByClassName("PortefolioTotal");
+
+    console.log('Total is working...');
+    console.log(Tab);
+
+    for(i = 0 ; i < Tab[0].length ; i++)
+    {
+      Tab[2][i].textContent = (Tab[0][i].textContent * Tab[1][i].value).toFixed(2);
+      somme +=parseFloat(Tab[2][i].textContent);
+    }
+    somme = somme.toFixed(2);
+    Total.textContent = 'Total : '+ somme +' EUR';
+  },
+};  

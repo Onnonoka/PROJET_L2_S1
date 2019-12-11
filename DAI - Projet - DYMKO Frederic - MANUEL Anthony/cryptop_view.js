@@ -501,11 +501,11 @@ view = {
                   <img src="https://assets.coinlayer.com/icons/BTC.png" /> BTC
                 </span></td>
               <td><b>Bitcoin</b></td>
-              <td class="text-right">7885.74</td>
+              <td class="text-right PortefolioPrix">7885.74</td>
               <td class="text-right">
-                <input type="text" class="form-control " value="1" />
+                <input type="text" onchange="actions.TotalPortefolio()" class="form-control PortefolioQte" value="1" />
               </td>
-              <td class="text-right"><span class=""><b>7885.74</b></span></td>
+              <td class="text-right"><span class=""><b class="PortefolioTotal">7885.74</b></span></td>
             </tr>
             <tr>
               <td class="text-center">
@@ -513,12 +513,12 @@ view = {
                   <img src="https://assets.coinlayer.com/icons/ETH.png" /> ETH
                 </span></td>
               <td><b>Ethereum</b></td>
-              <td class="text-right">168.21</td>
+              <td class="text-right PortefolioPrix">168.21</td>
               <td class="text-right">
-                <input type="text" class="form-control text-primary" value="13" />
+                <input type="text" onchange="actions.TotalPortefolio()" class="form-control text-primary PortefolioQte" value="13" />
               </td>
               <td class="text-right"><span
-                  class="text-primary"><b>2186.79</b></span></td>
+                  class="text-primary"><b class="PortefolioTotal">2186.79</b></span></td>
             </tr>
             <tr>
               <td class="text-center">
@@ -526,12 +526,12 @@ view = {
                   <img src="https://assets.coinlayer.com/icons/LTC.png" /> LTC
                 </span></td>
               <td><b>Litecoin</b></td>
-              <td class="text-right">54.04</td>
+              <td class="text-right PortefolioPrix">54.04</td>
               <td class="text-right">
-                <input type="text" class="form-control text-primary" value="21" />
+                <input type="text" onchange="actions.TotalPortefolio()" class="form-control text-primary PortefolioQte" value="21" />
               </td>
               <td class="text-right"><span
-                  class="text-primary"><b>1134.81</b></span></td>
+                  class="text-primary"><b class="PortefolioTotal">1134.81</b></span></td>
             </tr>
           </table>
         </div>
@@ -545,7 +545,7 @@ view = {
         </div>
       </div>
       <div class="card-footer">
-        <h3><span class="badge badge-primary">Total : 11207.34 EUR</span></h3>
+        <h3><span class="badge badge-primary" id="JeSuisTotal">Total : 11207.34 EUR</span></h3>
       </div>
     </div>
     `;
