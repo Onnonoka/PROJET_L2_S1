@@ -93,7 +93,10 @@ view = {
           dataClass = 'bg-warning';
         }
       }
-
+      let change = element.change.toFixed(3);
+      change += (element.change > 1)? ' ↗' : (element.change === 0)? ' ~' : ' ↘';
+      
+      ;
       dataHTML += `
         <tr class="${dataClass}">
           <td class="text-center">
@@ -102,7 +105,7 @@ view = {
             </span></td>
           <td><b>${element.name}</b></td>
           <td class="text-right"><b>${element.price.toFixed(2)}</b></td>
-          <td class="text-right">${element.change.toFixed(3)}</td>
+          <td class="text-right">${change}</td>
         </tr>
       `
     }
