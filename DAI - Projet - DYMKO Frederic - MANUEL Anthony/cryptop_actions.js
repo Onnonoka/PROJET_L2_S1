@@ -49,6 +49,9 @@ actions = {
 
   //----------------------------------------------------------- CurrenciesUI ---
 
+  changeFilterTab(data) {
+    model.samPresent({do: "changeFilter", filter: data.value, id: data.id});
+  },
   // TODO: ajoutez vos fonctions...
 
   //----------------------------------------------- CurrenciesUI et WalletUI ---

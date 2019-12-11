@@ -76,6 +76,37 @@ view = {
 
   currenciesCrytopsUI(model, state) {
 
+    const list = state.data.cryptos.filtered;
+    const pagination = model.ui.currenciesCard.tabs.cryptos.pagination;
+    let position = pagination.rowsPerPage[pagination.rowsPerPageIndex];
+    let dataHTML = '';
+    let i;
+    for (i = pagination.currentPage * position - position; i < position && i < list.length; i++) {
+      let element = list[i];
+      let dataClass = ''; 
+      let coins = Object.keys(model.config.coins);
+      pos = coins.indexOf(element.code);
+      if (pos !== -1) {
+        if (model.config.coins[element.code].quantity > 0) {
+          dataClass = 'bg-success text-light';
+        } else {
+          dataClass = 'bg-warning';
+        }
+      }
+
+      dataHTML += `
+        <tr class="${dataClass}">
+          <td class="text-center">
+            <span class="badge badge-pill badge-light">
+              <img src="${element.icon_url}" /> ${element.code}
+            </span></td>
+          <td><b>${element.name}</b></td>
+          <td class="text-right"><b>${element.price.toFixed(2)}</b></td>
+          <td class="text-right">${element.change.toFixed(3)}</td>
+        </tr>
+      `
+    }
+    
     const paginationHTML = this.paginationUI(model, state, 'cryptos');
 
     return `
@@ -98,8 +129,68 @@ view = {
           <div class="input-group-append">
             <span class="input-group-text">Filtres : </span>
           </div>
+          <input value="${model.ui.currenciesCard.tabs.cryptos.filters.text}" id="filterText" type="text" class="form-control"
+            placeholder="code ou nom..." onchange="actions.changeFilterTab({value: value, id:'text'})"/>
+          <div class="input-group-append">
+            <span class="input-group-text">Prix &gt; </span>
+          </div>
+          <input id="filterSup" type="number" class="form-control" value="${model.ui.currenciesCard.tabs.cryptos.filters.price}" min="0" onchange="actions.changeFilterTab({value: value, id:'price'})"/>
+        </div> <br />
+        <div class="table-responsive">
+          <table class="col-12 table table-sm table-bordered">
+            <thead>
+              <th class="align-middle text-center col-2">
+                <a href="#currencies">Code</a>
+              </th>
+              <th class="align-middle text-center col-5">
+                <a href="#currencies">Nom</a>
+              </th>
+              <th class="align-middle text-center col-2">
+                <a href="#currencies">Prix</a>
+              </th>
+              <th class="align-middle text-center col-3">
+                <a href="#currencies">Variation</a>
+              </th>
+            </thead>
+            ${dataHTML}
+          </table>
+        </div>
+        ${paginationHTML}
+      </div>
+      <div class="card-footer text-muted"> Cryptos préférées :
+        <span class="badge badge-warning">BCH</span>
+        <span class="badge badge-success">BTC</span>
+        <span class="badge badge-warning">BTLC</span>
+        <span class="badge badge-warning">DSH</span>
+        <span class="badge badge-success">ETH</span>
+        <span class="badge badge-success">LTC</span>
+        <span class="badge badge-warning">XMR</span>
+      </div>
+    </div>
+    `;
+
+    /*return `
+    <div class="card border-secondary" id="currencies">
+      <div class="card-header">
+        <ul class="nav nav-pills card-header-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" href="#currencies"> Cryptos <span
+                class="badge badge-light">10 / 386</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-secondary" href="#currencies"
+              onclick="actions.changeTab({tab:'currenciesFiats'})"> Monnaies cibles
+              <span class="badge badge-secondary">10 / 167</span></a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <div class="input-group">
+          <div class="input-group-append">
+            <span class="input-group-text">Filtres : </span>
+          </div>
           <input value="coin" id="filterText" type="text" class="form-control"
-            placeholder="code ou nom..." />
+            placeholder="code ou nom..."/>
           <div class="input-group-append">
             <span class="input-group-text">Prix &gt; </span>
           </div>
@@ -121,7 +212,7 @@ view = {
                 <a href="#currencies">Variation</a>
               </th>
             </thead>
-            <tr class="bg-warning">
+            <tr id="00" class="bg-warning">
               <td class="text-center">
                 <span class="badge badge-pill badge-light">
                   <img src="https://assets.coinlayer.com/icons/BCH.png" /> BCH
@@ -225,7 +316,7 @@ view = {
         <span class="badge badge-warning">XMR</span>
       </div>
     </div>
-    `;
+    `;*/
   },
 
   paginationUI(model, state, currency) {
