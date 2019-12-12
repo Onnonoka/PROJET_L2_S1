@@ -67,6 +67,7 @@ model = {
         }
         this.hasChanged.cryptos.filter = true;
         this.hasChanged.cryptos.pagination = true;
+        console.log(this.ui.currenciesCard.tabs.cryptos.sort.incOrder);
       break;
       // TODO: ajoutez des cas répondant à vos actions...
 

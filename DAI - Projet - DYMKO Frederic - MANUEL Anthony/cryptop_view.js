@@ -116,7 +116,7 @@ view = {
         <ul class="nav nav-pills card-header-tabs">
           <li class="nav-item">
             <a class="nav-link active" href="#currencies"> Cryptos <span
-                class="badge badge-light">10 / 386</span></a>
+                class="badge badge-light">${state.data.cryptos.filteredNum} / ${state.data.cryptos.listNum}</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-secondary" href="#currencies"
