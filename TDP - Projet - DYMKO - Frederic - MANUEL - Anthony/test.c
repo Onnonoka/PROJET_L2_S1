@@ -5,17 +5,23 @@
 int main(int argc, char *argv[]) {
     char *saisie, *value, *commande, *aux;
 
-    saisie = malloc(sizeof(char));
-    printf("DDG> ");
-    fgets(saisie, 18, stdin);
-    value = strstr(saisie, " ");
-    commande = saisie;
-    value[0] = '\0';
-    value = &value[1];
-    aux = strstr(saisie, "\n");
-    /*aux[0] = '\0'*/;
-    printf("%s: %s , %s Ok\n", commande, value, aux);
-    
+    int i = 0;
+
+    while (saisie[i] != '\n' && saisie[i] != ' ')
+    {
+        i++;
+    }
+
+    if(saisie[i] == ' ')
+    {
+        saisie[i] = '\0';
+        value = &saisie[i+1];
+    }
+    else
+    {
+        
+    }
+        
 
     return 0;
 }
