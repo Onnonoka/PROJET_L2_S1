@@ -136,9 +136,6 @@ int main(int argc, char *argv[]) {
         value[0] = '\0';
         printf("DDG> ");
         fgets(saisie, 19, stdin);
-        if (saisie[strlen(saisie) - 1] != '\n') {
-            
-        }
         i = 0;
         j = 0;
         arg2 = 0;
