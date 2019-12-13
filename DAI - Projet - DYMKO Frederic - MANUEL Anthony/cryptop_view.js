@@ -80,8 +80,8 @@ view = {
     const pagination = model.ui.currenciesCard.tabs.cryptos.pagination;
     let position = pagination.rowsPerPage[pagination.rowsPerPageIndex];
     let dataHTML = '';
-    let i;
-    for (i = pagination.currentPage * position - position; i < position && i < list.length; i++) {
+    let i = pagination.currentPage * position;
+    while (i < position && i < list.length) {
       let element = list[i];
       let dataClass = ''; 
       let coins = Object.keys(model.config.coins);
@@ -107,6 +107,7 @@ view = {
           <td class="text-right">${change}</td>
         </tr>
       `
+      i++;
     }
     const paginationHTML = this.paginationUI(model, state, 'cryptos');
 

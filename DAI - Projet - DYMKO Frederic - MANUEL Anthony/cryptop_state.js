@@ -174,13 +174,15 @@ state = {
   },
 
   updateCryptosFiltered(model) {
-    const filters = model.ui.currenciesCard.tabs.cryptos.filters;
+    const filters = model.ui.currenciesCard.tabs.cryptos.filters
     const cFiltered = Object.values(this.data.cryptos.list).filter( v => {
+      console.log(v);
       if (v.name.toLowerCase().search(filters.text.toLowerCase()) === -1 || v.price < filters.price) {
         return false;
       }
       return true;
     });
+    console.log("cfiltered = ", cFiltered);
     this.data.cryptos.filtered    = cFiltered;
     this.data.cryptos.filteredNum = cFiltered.length;
 
