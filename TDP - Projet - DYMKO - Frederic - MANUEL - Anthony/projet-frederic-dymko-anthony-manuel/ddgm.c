@@ -33,9 +33,9 @@ void display_h() {
 }
 
 void display_v() {
-    printf("DDGM (Dungeons and Dragons Game Manager) 23\n\n");
-    printf("Copyright (C) 2019 DYMKO Frederic and MANUEL Anthony.\n\n");
-    printf("Written by DYMKO Frederic <dymko.frederic@univ-pau.fr> and MANUEL Anthony <manuel.anthony@univ-pau.fr.\n");
+    printf("DDGM (Dungeons and Dragons Game Manager) 42\n\n");
+    printf("Copyright (C) 2019 Frederic Dymko and Anthony Manuel.\n\n");
+    printf("Written by Frederic Dymko <frederic.dymko@etud.univ-pau.fr> and Anthony Manuel <anthony.manuel@etud.univ-pau.fr.\n");
 }
 
 char *verif_Parameter(char *value) {
@@ -132,6 +132,7 @@ int main(int argc, char *argv[]) {
     saisie = malloc(sizeof(char) * 19);
     do {
         commande = malloc(sizeof(char));
+        commande[0] = '\0';
         value = malloc(sizeof(char));
         value[0] = '\0';
         printf("DDG> ");
@@ -224,17 +225,17 @@ int main(int argc, char *argv[]) {
                 fprintf(stderr, "%s: Too many characters for the command\n", argv[0]);
             }
         }
-        
+
         free(commande);
         free(value);
     } while (!exit);
-    
+
     free(saisie);
 
     ddg_free(ddg);
     xmlCleanupParser();
     free(xmlFileNode);
     xmlFreeDoc(xmlFile);
-    
+
     return 0;
 }

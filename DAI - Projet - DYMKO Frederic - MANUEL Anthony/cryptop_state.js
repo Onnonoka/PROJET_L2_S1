@@ -207,8 +207,8 @@ state = {
     const order = sort.incOrder[sort.column] ? 1 : -1;
     this.data[currency].filtered.sort( (a,b) => {
       switch (typeof(a[prop])) {
-        case 'number': return 0;  // TODO: Modifiez ici
-        case 'string': return 0;  // TODO: Modifiez ici
+        case 'number': return a - b;  // TODO: Modifiez ici
+        case 'string': return a > b;  // TODO: Modifiez ici
       }
     });
     if (model.config.debug) console.log('state.samUpdate - '+currency+'.filtered :', this.data[currency].filtered);
