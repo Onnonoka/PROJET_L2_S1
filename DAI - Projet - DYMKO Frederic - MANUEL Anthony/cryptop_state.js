@@ -176,11 +176,7 @@ state = {
   updateCryptosFiltered(model) {
     const filters = model.ui.currenciesCard.tabs.cryptos.filters
     const cFiltered = Object.values(this.data.cryptos.list).filter( v => {
-      console.log(v);
-      if (v.name.toLowerCase().search(filters.text.toLowerCase()) === -1 || v.price < filters.price) {
-        return false;
-      }
-      return true;
+      return (v.name.toLowerCase().search(filters.text.toLowerCase()) !== -1 && v.price >= filters.price);
     });
     console.log("cfiltered = ", cFiltered);
     this.data.cryptos.filtered    = cFiltered;
@@ -207,10 +203,12 @@ state = {
     const sort  = model.ui.currenciesCard.tabs[currency].sort;
     const prop  = sort.columns [sort.column];
     const order = sort.incOrder[sort.column] ? 1 : -1;
+    console.log(prop);
     this.data[currency].filtered.sort( (a,b) => {
+      console.log(a[prop] > b[prop]);
       switch (typeof(a[prop])) {
-        case 'number': return a - b;  // TODO: Modifiez ici
-        case 'string': return a > b;  // TODO: Modifiez ici
+        case 'number': return (order === 1)? b[prop] - a[prop] : a[prop] - b[prop];  // TODO: Modifiez ici
+        case 'string': return (order === 1)? a[prop] > b[prop] : b[prop] < a[prop];  // TODO: Modifiez ici
       }
     });
     if (model.config.debug) console.log('state.samUpdate - '+currency+'.filtered :', this.data[currency].filtered);

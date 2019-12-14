@@ -76,12 +76,13 @@ view = {
 
   currenciesCrytopsUI(model, state) {
 
-    const list = state.data.cryptos.filtered.map(x => x);
+    let list = state.data.cryptos.filtered;
     const pagination = model.ui.currenciesCard.tabs.cryptos.pagination;
-    let position = pagination.rowsPerPage[pagination.rowsPerPageIndex];
+    let pageLength = pagination.rowsPerPage[pagination.rowsPerPageIndex];
     let dataHTML = '';
-    let i = pagination.currentPage * position;
-    while (i < position && i < list.length) {
+    let i = pagination.currentPage * pageLength - pageLength;
+    if (i < 0 ) i = 0;
+    while (i < pageLength && i < list.length) {
       let element = list[i];
       let dataClass = ''; 
       let coins = Object.keys(model.config.coins);
@@ -142,16 +143,16 @@ view = {
           <table class="col-12 table table-sm table-bordered">
             <thead>
               <th class="align-middle text-center col-2">
-                <a href="#currencies">Code</a>
+                <a href="#currencies" onclick="actions.changeSort({id: 'code'})">Code</a>
               </th>
               <th class="align-middle text-center col-5">
-                <a href="#currencies">Nom</a>
+                <a href="#currencies" onclick="actions.changeSort({id: 'name'})">Nom</a>
               </th>
               <th class="align-middle text-center col-2">
-                <a href="#currencies">Prix</a>
+                <a href="#currencies" onclick="actions.changeSort({id: 'price'})">Prix</a>
               </th>
               <th class="align-middle text-center col-3">
-                <a href="#currencies">Variation</a>
+                <a href="#currencies" onclick="actions.changeSort({id: 'change'})">Variation</a>
               </th>
             </thead>
             ${dataHTML}

@@ -50,7 +50,11 @@ actions = {
   //----------------------------------------------------------- CurrenciesUI ---
 
   changeFilterTab(data) {
-    model.samPresent({do: "changeFilter", filter: data.value, id: data.id});
+    model.samPresent({do: 'changeFilter', filter: data.value, id: data.id});
+  },
+
+  changeSort(data) {
+    model.samPresent({do: 'changeSort', sort: data.id});
   },
   // TODO: ajoutez vos fonctions...
 

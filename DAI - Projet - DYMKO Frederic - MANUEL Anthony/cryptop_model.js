@@ -67,10 +67,20 @@ model = {
         }
         this.hasChanged.cryptos.filter = true;
         this.hasChanged.cryptos.pagination = true;
-        console.log(this.ui.currenciesCard.tabs.cryptos.sort.incOrder);
+      break;
+
+      case 'changeSort' :
+        let sort = this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].sort;
+        if (sort.columns[sort.column] === data.sort) {
+          sort.incOrder[sort.column] = !sort.incOrder[sort.column];
+        } else {
+          sort.columns[sort.column] === true;
+          sort.column = sort.columns.indexOf(data.sort);
+        }
+        this.hasChanged[this.ui.currenciesCard.selectedTab].sort = true;
       break;
       // TODO: ajoutez des cas répondant à vos actions...
-
+      
 
       default:
         console.error(`model.samPresent(), unknown do: '${data.do}' `);
