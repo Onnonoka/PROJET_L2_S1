@@ -65,6 +65,8 @@ model = {
         } else {
           this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].filters.text = data.filter;
         }
+        this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].pagination.currentPage = 1;
+
         this.hasChanged[this.ui.currenciesCard.selectedTab].filter = true;
         this.hasChanged[this.ui.currenciesCard.selectedTab].pagination = true;
       break;
