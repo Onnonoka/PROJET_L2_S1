@@ -61,12 +61,12 @@ model = {
 
       case 'changeFilter' :
         if (data.id === 'price') {
-          this.ui.currenciesCard.tabs.cryptos.filters.price = data.filter;
+          this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].filters.price = data.filter;
         } else {
-          this.ui.currenciesCard.tabs.cryptos.filters.text = data.filter;
+          this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].filters.text = data.filter;
         }
-        this.hasChanged.cryptos.filter = true;
-        this.hasChanged.cryptos.pagination = true;
+        this.hasChanged[this.ui.currenciesCard.selectedTab].filter = true;
+        this.hasChanged[this.ui.currenciesCard.selectedTab].pagination = true;
       break;
 
       case 'changeSort' :
@@ -78,6 +78,11 @@ model = {
           sort.column = sort.columns.indexOf(data.sort);
         }
         this.hasChanged[this.ui.currenciesCard.selectedTab].sort = true;
+      break;
+
+      case 'changePage': 
+        this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].pagination.currentPage = data.value;
+        this.hasChanged[this.ui.currenciesCard.selectedTab].pagination = true;
       break;
       // TODO: ajoutez des cas répondant à vos actions...
       

@@ -56,6 +56,10 @@ actions = {
   changeSort(data) {
     model.samPresent({do: 'changeSort', sort: data.id});
   },
+
+  changePage(data) {
+    model.samPresent({do: 'changePage', value: data.v});
+  },
   // TODO: ajoutez vos fonctions...
 
   //----------------------------------------------- CurrenciesUI et WalletUI ---

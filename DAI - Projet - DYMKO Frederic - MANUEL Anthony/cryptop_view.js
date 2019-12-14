@@ -82,7 +82,7 @@ view = {
     let dataHTML = '';
     let i = pagination.currentPage * pageLength - pageLength;
     if (i < 0 ) i = 0;
-    while (i < pageLength && i < list.length) {
+    while (i < pageLength * pagination.currentPage && i < list.length) {
       let element = list[i];
       let dataClass = ''; 
       let coins = Object.keys(model.config.coins);
@@ -323,7 +323,68 @@ view = {
   },
 
   paginationUI(model, state, currency) {
+    let tabs = model.ui.currenciesCard.selectedTab;
+    let modelPagination = model.ui.currenciesCard.tabs[model.ui.currenciesCard.selectedTab].pagination;
+    let currentPage = modelPagination.currentPage;
+    let statePagination = state.ui.currenciesCard.tabs[tabs].pagination;
+    let pages = `<li class="${(currentPage === 1)? 'page-item disabled': ''}">
+                    <a class="page-link" href="#currencies" onclick="actions.changePage({v: ${(currentPage === 1)? '': currentPage - 1}})">&lt;</a>
+                 </li>
+                 `;
+
+
+    
+    let i = modelPagination.currentPage;
+    let iMax;
+    if (i <= 4) {
+      i = 1;
+      iMax = (statePagination.nbPages > 8)? 8 : statePagination.nbPages;
+    } else if (i > statePagination.nbPages - 4) {
+      i = statePagination.nbPages - 7;
+      iMax = statePagination.nbPages;
+    } else {
+      i = modelPagination.currentPage - 3;
+      iMax = modelPagination.currentPage + 4;
+    }
+    while(i <= iMax) {
+      pages += `<li class="${(currentPage === i)? 'page-item active': ''}">
+                  <a class="page-link" href="#currencies" onclick="actions.changePage({v: ${i}})">${i}</a>
+                </li> 
+                `;
+                i++;
+    }
+
+    pages += `<li class="${(currentPage === statePagination.nbPages)? 'page-item disabled' : ''}">
+                <a class="page-link" href="#currencies" onclick="actions.changePage({v: ${(currentPage === statePagination.nbPages)? '' : currentPage + 1}})">&gt;</a>
+              </li>
+    
+    `;
+
     return `
+    <section id="pagination">
+      <div class="row justify-content-center">
+        <nav class="col-auto">
+          <ul class="pagination">
+            ${pages}
+          </ul>
+        </nav>
+        <div class="col-auto">
+          <div class="input-group mb-3">
+            <select class="custom-select" id="selectTo">
+              <option value="0">5</option>
+              <option selected="selected" value="1">10</option>
+              <option value="2">15</option>
+            </select>
+            <div class="input-group-append">
+              <span class="input-group-text">par page</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    `;
+
+    /*return `
     <section id="pagination">
       <div class="row justify-content-center">
         <nav class="col-auto">
@@ -353,7 +414,7 @@ view = {
         </div>
       </div>
     </section>
-    `;
+    `;*/
   },
 
   currenciesFiatsUI(model,state) {
