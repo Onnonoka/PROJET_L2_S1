@@ -92,13 +92,23 @@ model = {
         this.hasChanged[model.ui.currenciesCard.selectedTab].pagination = true;
       break;
 
-      case 'changeCryptoStatus':
-        let coins = this.config.coins;
-        let pos = Object.keys(coins).indexOf(data.id);
-        if (pos === -1) {
-          coins[data.id] = {quantity: 0, quantityNew: ''};
-        } else if (coins[data.id].quantity === 0 && coins[data.id].quantityNew === '') {
-          delete coins[data.id];
+      case 'changeStatus':
+        if (model.ui.currenciesCard.selectedTab === 'cryptos') {
+          let coins = this.config.coins;
+          let pos = Object.keys(coins).indexOf(data.id);
+          if (pos === -1) {
+            coins[data.id] = {quantity: 0, quantityNew: ''};
+          } else if (coins[data.id].quantity === 0 && coins[data.id].quantityNew === '') {
+            delete coins[data.id];
+          }
+        } else {
+          let target = this.config.targets;
+          let pos = target.list.indexOf(data.id);
+          if (pos === -1) {
+            target.list.push(data.id);
+          } else if (target.list[pos] !== target.active) {
+            target.list.splice(pos, 1);
+          }
         }
       break;
       // TODO: ajoutez des cas répondant à vos actions...

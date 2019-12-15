@@ -65,8 +65,8 @@ actions = {
     model.samPresent({do: 'changePageLength', value: data.v});
   },
   
-  changeCryptoStatus(data) {
-    model.samPresent({do: 'changeCryptoStatus', id: data.id});
+  changeStatus(data) {
+    model.samPresent({do: 'changeStatus', id: data.id});
   },
   // TODO: ajoutez vos fonctions...
 

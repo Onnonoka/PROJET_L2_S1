@@ -98,7 +98,7 @@ view = {
       change += (element.change > 0)? ' ↗' : (element.change === 0)? ' ∼' : ' ↘';
 
       dataHTML += `
-        <tr class="${dataClass}" onclick="actions.changeCryptoStatus({id: '${element.code}'})">
+        <tr class="${dataClass}" onclick="actions.changeStatus({id: '${element.code}'})">
           <td class="text-center">
             <span class="badge badge-pill badge-light">
               <img src="${element.icon_url}" /> ${element.code}
@@ -120,7 +120,7 @@ view = {
       } else {
         return `<span class="badge badge-success">${x}</span>`;
       }
-    });
+    }).join(' ');
 
 
     const paginationHTML = this.paginationUI(model, state, 'cryptos');
@@ -136,7 +136,7 @@ view = {
           <li class="nav-item">
             <a class="nav-link text-secondary" href="#currencies"
               onclick="actions.changeTab({tab:'currenciesFiats'})"> Monnaies cibles
-              <span class="badge badge-secondary">10 / 167</span></a>
+              <span class="badge badge-secondary">${state.data.fiats.filteredNum} / ${state.data.fiats.listNum}</span></a>
           </li>
         </ul>
       </div>
@@ -432,6 +432,45 @@ view = {
 
     const paginationHTML = this.paginationUI(model, state, 'fiats');
 
+
+    let target = model.config.targets;
+    let favorite = '';
+    favorite = target.list.sort().map(element => {
+      return(element === target.active)? `<span class="badge badge-success">${element}</span>` : `<span class="badge badge-warning">${element}</span>`;
+    }).join(' ');
+
+    let list = state.data.fiats.filtered;
+    let pagination = model.ui.currenciesCard.tabs.fiats.pagination;
+    let pageLength = pagination.rowsPerPage[pagination.rowsPerPageIndex];
+    let dataHTML = '';
+    let i = pagination.currentPage * pageLength - pageLength;
+    while (i < pageLength * pagination.currentPage && i < list.length) {
+      let element = list[i];
+      let dataClass = ''; 
+      let target = model.config.targets;
+      pos = target.list.indexOf(element.code);
+      if (pos !== -1) {
+        if (model.config.targets.active === element.code) {
+          dataClass = 'bg-success text-light';
+        } else {
+          dataClass = 'bg-warning';
+        }
+      }
+
+      dataHTML += `
+        <tr class="${dataClass}" onclick="actions.changeStatus({id: '${element.code}'})">
+          <td class="text-center">
+            <span class="badge-pill">
+              ${element.code}
+            </span></td>
+          <td><b>${element.name}</b></td>
+          <td class="text-center">${element.symbol}</td>
+        </tr>
+      `
+      i++;
+    }
+
+
     return `
     <div class="card border-secondary"
       id="currencies">
@@ -440,11 +479,59 @@ view = {
           <li class="nav-item">
             <a class="nav-link text-secondary" href="#currencies"
               onclick="actions.changeTab({tab:'currenciesCryptos'})"> Cryptos <span
-                class="badge badge-secondary">10 / 386</span></a>
+                class="badge badge-secondary">${state.data.cryptos.filteredNum} / ${state.data.cryptos.listNum}</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="#currencies">Monnaies cibles <span
-                class="badge badge-light">10 / 167</span></a>
+                class="badge badge-light">${state.data.fiats.filteredNum} / ${state.data.fiats.listNum}</span></a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <div class="input-group">
+          <div class="input-group-append">
+            <span class="input-group-text">Filtres : </span>
+          </div>
+          <input value="${model.ui.currenciesCard.tabs.fiats.filters.text}" id="filterText" type="text" class="form-control"
+            placeholder="code ou nom..." onchange="actions.changeFilterTab({value: value, id:'text'})"/>
+        </div> <br />
+        <div>
+        <table class="col-12 table table-sm table-bordered">
+        <thead>
+          <th class="align-middle text-center col-2">
+            <a href="#currencies" onclick="actions.changeSort({id: 'code'})">Code</a>
+          </th>
+          <th class="align-middle text-center col-5">
+            <a href="#currencies" onclick="actions.changeSort({id: 'name'})">Nom</a>
+          </th>
+          <th class="align-middle text-center col-2">
+            <a href="#currencies" onclick="actions.changeSort({id: 'price'})">Symbole</a>
+          </th>
+        </thead>
+        ${dataHTML}
+      </table>
+        </div>
+        ${paginationHTML}
+      </div>
+      <div class="card-footer text-muted"> Monnaies préférées :
+        ${favorite}
+      </div>
+    </div>
+    `;
+
+    /*return `
+    <div class="card border-secondary"
+      id="currencies">
+      <div class="card-header">
+        <ul class="nav nav-pills card-header-tabs">
+          <li class="nav-item">
+            <a class="nav-link text-secondary" href="#currencies"
+              onclick="actions.changeTab({tab:'currenciesCryptos'})"> Cryptos <span
+                class="badge badge-secondary">${state.data.cryptos.filteredNum} / ${state.data.cryptos.listNum}</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#currencies">Monnaies cibles <span
+                class="badge badge-light">${state.data.fiats.filteredNum} / ${state.data.fiats.listNum}</span></a>
           </li>
         </ul>
       </div>
@@ -460,15 +547,10 @@ view = {
         ${paginationHTML}
       </div>
       <div class="card-footer text-muted"> Monnaies préférées :
-        <span class="badge badge-warning">CUP</span>
-        <span class="badge badge-success">EUR</span>
-        <span class="badge badge-warning">GBP</span>
-        <span class="badge badge-warning">JEP</span>
-        <span class="badge badge-warning">TTD</span>
-        <span class="badge badge-warning">USD</span>
+        ${favorite}
       </div>
     </div>
-    `;
+    `;*/
   },
 
   preferencesUI(model, state) {

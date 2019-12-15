@@ -176,7 +176,7 @@ state = {
   updateCryptosFiltered(model) {
     const filters = model.ui.currenciesCard.tabs.cryptos.filters
     const cFiltered = Object.values(this.data.cryptos.list).filter( v => {
-      return (v.name.toLowerCase().search(filters.text.toLowerCase()) !== -1 && v.price >= filters.price);
+      return ((v.name.toLowerCase().search(filters.text.toLowerCase()) !== -1 || v.code.toLowerCase().search(filters.text.toLowerCase()) !== -1) && v.price >= filters.price);
     });
     this.data.cryptos.filtered    = cFiltered;
     this.data.cryptos.filteredNum = cFiltered.length;
@@ -187,10 +187,7 @@ state = {
   updateFiatsFiltered(model) {
     const filters = model.ui.currenciesCard.tabs.fiats.filters;
     const fFiltered = Object.values(this.data.fiats.list).filter( v => {
-
-      // TODO: Complétez ici
-
-      return true;
+      return (v.name.toLowerCase().search(filters.text.toLowerCase()) !== -1 || v.code.toLowerCase().search(filters.text.toLowerCase()) !== -1);
     });
     this.data.fiats.filtered = fFiltered;
     this.data.fiats.filteredNum = fFiltered.length;
