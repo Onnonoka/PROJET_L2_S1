@@ -114,7 +114,7 @@ view = {
     let coins = model.config.coins;
     let keys = Object.keys(coins).sort();
 
-    favorite = keys.map(x => {
+    let favorite = keys.map(x => {
       if(coins[x].quantity === 0) {
         return `<span class="badge badge-warning">${x}</span>`;
       } else {
@@ -434,9 +434,8 @@ view = {
 
 
     let target = model.config.targets;
-    let favorite = '';
-    favorite = target.list.sort().map(element => {
-      return(element === target.active)? `<span class="badge badge-success">${element}</span>` : `<span class="badge badge-warning">${element}</span>`;
+    let favorite = target.list.sort().map(element => {
+      return (element === target.active)? `<span class="badge badge-success">${element}</span>` : `<span class="badge badge-warning">${element}</span>`;
     }).join(' ');
 
     let list = state.data.fiats.filtered;
