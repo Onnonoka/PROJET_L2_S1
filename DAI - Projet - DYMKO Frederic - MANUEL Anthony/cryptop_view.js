@@ -504,7 +504,7 @@ view = {
             <a href="#currencies" onclick="actions.changeSort({id: 'name'})">Nom</a>
           </th>
           <th class="align-middle text-center col-2">
-            <a href="#currencies" onclick="actions.changeSort({id: 'price'})">Symbole</a>
+            <a href="#currencies" onclick="actions.changeSort({id: 'symbol'})">Symbole</a>
           </th>
         </thead>
         ${dataHTML}
