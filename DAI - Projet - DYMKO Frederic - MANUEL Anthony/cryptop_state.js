@@ -212,7 +212,6 @@ state = {
   },
 
   updatePagination(model, currency) {
-
     const pagination = model.ui.currenciesCard.tabs[currency].pagination;
     const numRows = state.data[currency].filteredNum;
     const numRowsPerPage = pagination.rowsPerPage[pagination.rowsPerPageIndex];

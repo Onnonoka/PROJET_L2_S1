@@ -324,7 +324,7 @@ view = {
 
   paginationUI(model, state, currency) {
     let tabs = model.ui.currenciesCard.selectedTab;
-    let modelPagination = model.ui.currenciesCard.tabs[model.ui.currenciesCard.selectedTab].pagination;
+    let modelPagination = model.ui.currenciesCard.tabs[tabs].pagination;
     let currentPage = modelPagination.currentPage;
     let statePagination = state.ui.currenciesCard.tabs[tabs].pagination;
     let pages = `<li class="${(currentPage === 1)? 'page-item disabled': ''}">
@@ -360,6 +360,12 @@ view = {
     
     `;
 
+    let paginations = '';
+    for(i = 0; i < modelPagination.rowsPerPage.length; i++) {
+      paginations += `<option ${(modelPagination.rowsPerPage[i] === modelPagination.rowsPerPage[modelPagination.rowsPerPageIndex])? 'selected="selected"' : ''} value="${i}">${modelPagination.rowsPerPage[i]}</option>
+      `;
+    }
+
     return `
     <section id="pagination">
       <div class="row justify-content-center">
@@ -370,10 +376,8 @@ view = {
         </nav>
         <div class="col-auto">
           <div class="input-group mb-3">
-            <select class="custom-select" id="selectTo">
-              <option value="0">5</option>
-              <option selected="selected" value="1">10</option>
-              <option value="2">15</option>
+            <select class="custom-select" id="selectTo" onchange="actions.changeLength({v: value})">
+              ${paginations}
             </select>
             <div class="input-group-append">
               <span class="input-group-text">par page</span>

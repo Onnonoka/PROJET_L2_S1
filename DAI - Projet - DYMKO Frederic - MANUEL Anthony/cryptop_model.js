@@ -86,6 +86,11 @@ model = {
         this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].pagination.currentPage = data.value;
         this.hasChanged[this.ui.currenciesCard.selectedTab].pagination = true;
       break;
+
+      case 'changePageLength':
+        this.ui.currenciesCard.tabs[model.ui.currenciesCard.selectedTab].pagination.rowsPerPageIndex = data.value;
+        this.hasChanged[model.ui.currenciesCard.selectedTab].pagination = true;
+      break;
       // TODO: ajoutez des cas répondant à vos actions...
       
 

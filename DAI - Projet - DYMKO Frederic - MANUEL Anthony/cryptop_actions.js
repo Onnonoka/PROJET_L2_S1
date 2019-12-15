@@ -60,6 +60,10 @@ actions = {
   changePage(data) {
     model.samPresent({do: 'changePage', value: data.v});
   },
+
+  changeLength(data) {
+    model.samPresent({do: 'changePageLength', value: data.v});
+  },
   // TODO: ajoutez vos fonctions...
 
   //----------------------------------------------- CurrenciesUI et WalletUI ---
