@@ -98,7 +98,7 @@ view = {
       change += (element.change > 1)? ' ↗' : (element.change === 0)? ' ∼' : ' ↘';
 
       dataHTML += `
-        <tr class="${dataClass}">
+        <tr class="${dataClass}" onclick="actions.changeCryptoStatus({id: '${element.code}'})">
           <td class="text-center">
             <span class="badge badge-pill badge-light">
               <img src="${element.icon_url}" /> ${element.code}
@@ -110,6 +110,19 @@ view = {
       `
       i++;
     }
+
+    let coins = model.config.coins;
+    let keys = Object.keys(coins).sort();
+
+    favorite = keys.map(x => {
+      if(coins[x].quantity === 0) {
+        return `<span class="badge badge-warning">${x}</span>`;
+      } else {
+        return `<span class="badge badge-success">${x}</span>`;
+      }
+    });
+
+
     const paginationHTML = this.paginationUI(model, state, 'cryptos');
 
     return `
@@ -161,13 +174,7 @@ view = {
         ${paginationHTML}
       </div>
       <div class="card-footer text-muted"> Cryptos préférées :
-        <span class="badge badge-warning">BCH</span>
-        <span class="badge badge-success">BTC</span>
-        <span class="badge badge-warning">BTLC</span>
-        <span class="badge badge-warning">DSH</span>
-        <span class="badge badge-success">ETH</span>
-        <span class="badge badge-success">LTC</span>
-        <span class="badge badge-warning">XMR</span>
+        ${favorite}
       </div>
     </div>
     `;

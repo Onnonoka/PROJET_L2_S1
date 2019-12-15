@@ -64,6 +64,10 @@ actions = {
   changeLength(data) {
     model.samPresent({do: 'changePageLength', value: data.v});
   },
+  
+  changeCryptoStatus(data) {
+    model.samPresent({do: 'changeCryptoStatus', id: data.id});
+  },
   // TODO: ajoutez vos fonctions...
 
   //----------------------------------------------- CurrenciesUI et WalletUI ---

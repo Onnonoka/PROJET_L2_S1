@@ -91,6 +91,16 @@ model = {
         this.ui.currenciesCard.tabs[model.ui.currenciesCard.selectedTab].pagination.rowsPerPageIndex = data.value;
         this.hasChanged[model.ui.currenciesCard.selectedTab].pagination = true;
       break;
+
+      case 'changeCryptoStatus':
+        let coins = this.config.coins;
+        let pos = Object.keys(coins).indexOf(data.id);
+        if (pos === -1) {
+          coins[data.id] = {quantity: 0, quantityNew: ''};
+        } else if (coins[data.id].quantity === 0 && coins[data.id].quantityNew === '') {
+          delete coins[data.id];
+        }
+      break;
       // TODO: ajoutez des cas répondant à vos actions...
       
 
