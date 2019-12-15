@@ -95,7 +95,7 @@ view = {
         }
       }
       let change = element.change.toFixed(3);
-      change += (element.change > 1)? ' ↗' : (element.change === 0)? ' ∼' : ' ↘';
+      change += (element.change > 0)? ' ↗' : (element.change === 0)? ' ∼' : ' ↘';
 
       dataHTML += `
         <tr class="${dataClass}" onclick="actions.changeCryptoStatus({id: '${element.code}'})">
