@@ -94,7 +94,7 @@ model = {
           let pos = Object.keys(coins).indexOf(data.id);
           if (pos === -1) {
             coins[data.id] = {quantity: 0, quantityNew: ''};
-          } else if (coins[data.id].quantity === 0 || coins[data.id].quantityNew === '') {
+          } else if (coins[data.id].quantity === 0 && (coins[data.id].quantityNew === '' || coins[data.id].quantityNew === '0')) {
             delete coins[data.id];
           }
         } else {

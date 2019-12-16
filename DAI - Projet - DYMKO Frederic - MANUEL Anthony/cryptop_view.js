@@ -496,10 +496,12 @@ view = {
 
     let dataHTML = '';
     let verif = true;
+    let valid = true;
     let total = 0;
     console.log(stateCoins.nullValueCodes);
     stateCoins.nullValueCodes.forEach(element => {
       console.log(element);
+      if (parseInt(coins[element].quantityNew) !== coins[element].quantity) valid = false;
       let value;
       if (isNaN(coins[element].quantityNew) || coins[element].quantityNew < 0) {
         value = '???';
@@ -563,7 +565,7 @@ view = {
       </div>
     </div>
     <div class="card-footer">
-      <h3><span class="badge badge-primary">Total : ${total.toFixed(2)} ${model.config.targets.active}</span></h3>
+      <h3><span class="badge ${valid? 'badge-success' : 'badge-primary'}">Total : ${total.toFixed(2)} ${model.config.targets.active}</span></h3>
     </div>
   </div>
     `;
