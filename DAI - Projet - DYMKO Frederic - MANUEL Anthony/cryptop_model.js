@@ -60,11 +60,7 @@ model = {
       } break;
 
       case 'changeFilter' :
-        if (data.id === 'price') {
-          this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].filters.price = data.filter;
-        } else {
-          this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].filters.text = data.filter;
-        }
+        this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].filters[data.id] = data.filter;
         this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].pagination.currentPage = 1;
 
         this.hasChanged[this.ui.currenciesCard.selectedTab].filter = true;
