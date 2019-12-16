@@ -94,7 +94,7 @@ model = {
           let pos = Object.keys(coins).indexOf(data.id);
           if (pos === -1) {
             coins[data.id] = {quantity: 0, quantityNew: ''};
-          } else if (coins[data.id].quantity === 0 && coins[data.id].quantityNew === '') {
+          } else if (coins[data.id].quantity === 0 || coins[data.id].quantityNew === '') {
             delete coins[data.id];
           }
         } else {
@@ -106,6 +106,30 @@ model = {
             target.list.splice(pos, 1);
           }
         }
+        this.hasChanged.coins = true;
+        console.log(this.config.coins);
+      break;
+
+      case 'updateCoins': 
+        coins = this.config.coins;
+        Object.values(coins).forEach(element => {
+          if (element.quantityNew === '') {
+            element.quantityNew = '0';
+          }
+        });
+        Object.values(coins).forEach(element => {
+          if (!isNaN(element.quantityNew) && parseInt(element.quantityNew) > 0) {
+            element.quantity += parseInt(element.quantityNew);
+          }
+        });
+
+        this.hasChanged.coins = true;
+      break;
+
+      case 'updateValues':
+        coins = this.config.coins;
+        coins[data.id].quantityNew = data.value;
+        this.hasChanged.coins = true;
       break;
       // TODO: ajoutez des cas répondant à vos actions...
       

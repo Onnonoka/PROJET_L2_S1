@@ -497,8 +497,10 @@ view = {
     let dataHTML = '';
     let verif = true;
     let total = 0;
+    console.log(stateCoins.nullValueCodes);
     stateCoins.nullValueCodes.forEach(element => {
-      let value; 
+      console.log(element);
+      let value;
       if (isNaN(coins[element].quantityNew) || coins[element].quantityNew < 0) {
         value = '???';
         verif = false;
@@ -515,7 +517,7 @@ view = {
         <td><b>${list[element].name}</b></td>
         <td class="text-right">${list[element].price.toFixed(2)}</td>
         <td class="text-right">
-          <input type="text" class="form-control ${(isNaN(value))? 'text-danger' : (value > 0)? 'text-primary' : ''}" value="${(coins[element].quantityNew === '')? '0' : coins[element].quantityNew}"/>
+          <input type="text" class="form-control ${(isNaN(value))? 'text-danger' : (value > 0)? 'text-primary' : ''}" value="${(coins[element].quantityNew === '')? '0' : coins[element].quantityNew}" onchange="actions.updateValues({v: value, id: '${element}'})"/>
         </td>
         <td class="text-right"><span class="${(isNaN(value))? 'text-danger' : (value > 0)? 'text-primary' : ''}"><b>${value}</b></span></td>
       </tr>
@@ -553,7 +555,7 @@ view = {
       </div>
       <div class="input-group d-flex justify-content-end">
         <div class="input-group-prepend">
-          <button class="${verif? '' : 'btn disabled'}">Confirmer</button>
+          <button class=" btn ${verif? 'btn-primary' : 'disabled'}" onclick="actions.updateCoins()">Confirmer</button>
         </div>
         <div class="input-group-append">
           <button class="btn btn-secondary">Annuler</button>

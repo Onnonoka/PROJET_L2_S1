@@ -99,6 +99,13 @@ actions = {
 
   //--------------------------------------------------------------- WalletUI ---
 
+  updateCoins() {
+    model.samPresent({do: 'updateCoins'});
+  },
+
+  updateValues(data) {
+    model.samPresent({do: 'updateValues', id: data.id, value: data.v});
+  },
   // TODO: ajoutez vos fonctions...
 
   TotalPortefolio(data) // Met a jour tous les totaux du Portefolio (Amélioration possible : met seulement à jour la ligne concernée par le changement.).
