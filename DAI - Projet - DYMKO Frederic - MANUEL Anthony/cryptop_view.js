@@ -499,14 +499,13 @@ view = {
     let list = state.data.cryptos.list;
 
     let dataHTML = '';
-
+    let verif = true;
     let total = 0;
     stateCoins.nullValueCodes.forEach(element => {
       let value; 
-      if (isNaN(coins[element].quantityNew)) {
-        value = coins[element].quantityNew;
-      } else if (coins[element].quantityNew < 0) {
+      if (isNaN(coins[element].quantityNew) || coins[element].quantityNew < 0) {
         value = '???';
+        verif = false;
       } else {
         value = (coins[element].quantityNew * list[element].price).toFixed(2);
         total += coins[element].quantityNew * list[element].price;
@@ -520,9 +519,9 @@ view = {
         <td><b>${list[element].name}</b></td>
         <td class="text-right">${list[element].price.toFixed(2)}</td>
         <td class="text-right">
-          <input type="text" class="form-control " value="${coins[element].quantityNew}"/>
+          <input type="text" class="form-control ${(isNaN(value))? 'text-danger' : (value > 0)? 'text-primary' : ''}" value="${(coins[element].quantityNew === '')? '0' : coins[element].quantityNew}"/>
         </td>
-        <td class="text-right"><span class="${(isNaN(value))? 'form-control text-danger' : ''}"><b>${value}</b></span></td>
+        <td class="text-right"><span class="${(isNaN(value))? 'text-danger' : (value > 0)? 'text-primary' : ''}"><b>${value}</b></span></td>
       </tr>
       `;
     });
@@ -558,7 +557,7 @@ view = {
       </div>
       <div class="input-group d-flex justify-content-end">
         <div class="input-group-prepend">
-          <button class="btn disabled">Confirmer</button>
+          <button class="${verif? '' : 'btn disabled'}">Confirmer</button>
         </div>
         <div class="input-group-append">
           <button class="btn btn-secondary">Annuler</button>
