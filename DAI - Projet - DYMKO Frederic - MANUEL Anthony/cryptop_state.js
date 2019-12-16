@@ -174,12 +174,9 @@ state = {
   },
 
   updateCryptosFiltered(model) {
-    const filters = model.ui.currenciesCard.tabs.cryptos.filters;
+    const filters = model.ui.currenciesCard.tabs.cryptos.filters
     const cFiltered = Object.values(this.data.cryptos.list).filter( v => {
-      if (v.name.toLowerCase().search(filters.text.toLowerCase()) === -1 || v.price < filters.price) {
-        return false;
-      }
-      return true;
+      return (((v.name.toLowerCase().includes(filters.text.toLowerCase())) || (v.code.toLowerCase().includes(filters.text.toLowerCase()))) && v.price >= filters.price);
     });
     this.data.cryptos.filtered    = cFiltered;
     this.data.cryptos.filteredNum = cFiltered.length;
@@ -190,10 +187,7 @@ state = {
   updateFiatsFiltered(model) {
     const filters = model.ui.currenciesCard.tabs.fiats.filters;
     const fFiltered = Object.values(this.data.fiats.list).filter( v => {
-
-      // TODO: Complétez ici
-
-      return true;
+      return (v.name.toLowerCase().search(filters.text.toLowerCase()) !== -1 || v.code.toLowerCase().search(filters.text.toLowerCase()) !== -1);
     });
     this.data.fiats.filtered = fFiltered;
     this.data.fiats.filteredNum = fFiltered.length;
@@ -207,15 +201,14 @@ state = {
     const order = sort.incOrder[sort.column] ? 1 : -1;
     this.data[currency].filtered.sort( (a,b) => {
       switch (typeof(a[prop])) {
-        case 'number': return 0;  // TODO: Modifiez ici
-        case 'string': return 0;  // TODO: Modifiez ici
+        case 'number': return (b[prop] - a[prop]) * order;
+        case 'string': return (a[prop].localeCompare(b[prop])) * order;
       }
     });
     if (model.config.debug) console.log('state.samUpdate - '+currency+'.filtered :', this.data[currency].filtered);
   },
 
   updatePagination(model, currency) {
-
     const pagination = model.ui.currenciesCard.tabs[currency].pagination;
     const numRows = state.data[currency].filteredNum;
     const numRowsPerPage = pagination.rowsPerPage[pagination.rowsPerPageIndex];

@@ -33,9 +33,9 @@ void display_h() {
 }
 
 void display_v() {
-    printf("DDGM (Dungeons and Dragons Game Manager) 23\n\n");
-    printf("Copyright (C) 2019 DYMKO Frederic and MANUEL Anthony.\n\n");
-    printf("Written by DYMKO Frederic <dymko.frederic@univ-pau.fr> and MANUEL Anthony <manuel.anthony@univ-pau.fr.\n");
+    printf("DDGM (Dungeons and Dragons Game Manager) 42\n\n");
+    printf("Copyright (C) 2019 Frederic Dymko and Anthony Manuel.\n\n");
+    printf("Written by Frederic Dymko <frederic.dymko@etud.univ-pau.fr> and Anthony Manuel <anthony.manuel@etud.univ-pau.fr.\n");
 }
 
 char *verif_Parameter(char *value) {
@@ -132,13 +132,11 @@ int main(int argc, char *argv[]) {
     saisie = malloc(sizeof(char) * 19);
     do {
         commande = malloc(sizeof(char));
+        commande[0] = '\0';
         value = malloc(sizeof(char));
         value[0] = '\0';
         printf("DDG> ");
         fgets(saisie, 19, stdin);
-        if (saisie[strlen(saisie) - 1] != '\n') {
-            
-        }
         i = 0;
         j = 0;
         arg2 = 0;
@@ -146,7 +144,7 @@ int main(int argc, char *argv[]) {
             if (arg2) {
                 value[j] = saisie[i];
                 j++;
-                value = realloc(value, sizeof(char) * j);
+                value = realloc(value, sizeof(char) * (j + 1));
                 value[j] = '\0';
             } else {
                 if (saisie[i] == ' ') {
@@ -162,77 +160,82 @@ int main(int argc, char *argv[]) {
             i++;
         }
         verif = verif_Parameter(value);
-        if (saisie[strlen(saisie) - 1] == '\n') {
-            if (strcmp(commande, "d") == 0) {
-                ddg_handle_d(*ddg);
-            } else if (strcmp(commande, "g") == 0) {
-                ddg_handle_g(*ddg);
-            } else if (strcmp(commande, "m") == 0) {
-                ddg_handle_m(*ddg);
-            } else if (strcmp(commande, "h") == 0) {
-                display_h();
-            } else if (strcmp(commande, "n") == 0) {
-                ddg_handle_n(*ddg);
-            } else if (strcmp(commande, "v") == 0) {
-                display_v();
-            } else if (strcmp(commande, "q") == 0) {
-                exit = 1;
-            } else if (strcmp(commande, "p") == 0) {
-                ddg_handle_p(*ddg);
-            } else if (strcmp(commande, "pcn") == 0) {
-                ddg_handle_pcn(*ddg, value);
-            } else if (strcmp(commande, "pc") == 0) {
-                ddg_handle_pc(*ddg, value);
-            } else if (strcmp(commande, "pn") == 0) {
-                ddg_handle_pn(*ddg, value);
-            } else if (strcmp(commande, "phge") == 0) {
-                if (verif == NULL) ddg_handle_page(*ddg, strtol(value, NULL, 10));
-                else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
-            } else if (strcmp(commande, "phgt") == 0) {
-                if (verif == NULL) ddg_handle_phgt(*ddg, strtol(value, NULL, 10));
-                else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
-            } else if (strcmp(commande, "phle") == 0) {
-                if (verif == NULL) ddg_handle_phle(*ddg, strtol(value, NULL, 10));
-                else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
-            } else if (strcmp(commande, "phlt") == 0) {
-                if (verif == NULL) ddg_handle_phlt(*ddg, strtol(value, NULL, 10));
-                else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
-            } else if (strcmp(commande, "ph") == 0) {
-                if (verif == NULL) ddg_handle_ph(*ddg, strtol(value, NULL, 10));
-                else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
-            } else if (strcmp(commande, "page") == 0) {
-                if (verif == NULL) ddg_handle_page(*ddg, strtol(value, NULL, 10));
-                else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
-            } else if (strcmp(commande, "pagt") == 0) {
-                if (verif == NULL) ddg_handle_pagt(*ddg, strtol(value, NULL, 10));
-                else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
-            } else if (strcmp(commande, "pale") == 0) {
-                if (verif == NULL) ddg_handle_pale(*ddg, strtol(value, NULL, 10));
-                else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
-            } else if (strcmp(commande, "palt") == 0) {
-                if (verif == NULL) ddg_handle_palt(*ddg, strtol(value, NULL, 10));
-                else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
-            } else if (strcmp(commande, "pa") == 0) {
-                if (verif == NULL) ddg_handle_pa(*ddg, strtol(value, NULL, 10));
-                else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+        if (strlen(commande) > 0) {
+            if (saisie[strlen(saisie) - 1] == '\n') {
+                if (strcmp(commande, "d") == 0) {
+                    ddg_handle_d(*ddg);
+                } else if (strcmp(commande, "g") == 0) {
+                    ddg_handle_g(*ddg);
+                } else if (strcmp(commande, "m") == 0) {
+                    ddg_handle_m(*ddg);
+                } else if (strcmp(commande, "h") == 0) {
+                    display_h();
+                } else if (strcmp(commande, "n") == 0) {
+                    ddg_handle_n(*ddg);
+                } else if (strcmp(commande, "v") == 0) {
+                    display_v();
+                } else if (strcmp(commande, "q") == 0) {
+                    exit = 1;
+                } else if (strcmp(commande, "p") == 0) {
+                    ddg_handle_p(*ddg);
+                } else if (strcmp(commande, "pcn") == 0) {
+                    if (strlen(value) > 0) ddg_handle_pcn(*ddg, value);
+                    else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+                } else if (strcmp(commande, "pc") == 0) {
+                    if (strlen(value) > 0) ddg_handle_pc(*ddg, value);
+                    else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+                } else if (strcmp(commande, "pn") == 0) {
+                    if (strlen(value) > 0) ddg_handle_pn(*ddg, value);
+                    else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+                } else if (strcmp(commande, "phge") == 0) {
+                    if (verif == NULL) ddg_handle_page(*ddg, strtol(value, NULL, 10));
+                    else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+                } else if (strcmp(commande, "phgt") == 0) {
+                    if (verif == NULL) ddg_handle_phgt(*ddg, strtol(value, NULL, 10));
+                    else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+                } else if (strcmp(commande, "phle") == 0) {
+                    if (verif == NULL) ddg_handle_phle(*ddg, strtol(value, NULL, 10));
+                    else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+                } else if (strcmp(commande, "phlt") == 0) {
+                    if (verif == NULL) ddg_handle_phlt(*ddg, strtol(value, NULL, 10));
+                    else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+                } else if (strcmp(commande, "ph") == 0) {
+                    if (verif == NULL) ddg_handle_ph(*ddg, strtol(value, NULL, 10));
+                    else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+                } else if (strcmp(commande, "page") == 0) {
+                    if (verif == NULL) ddg_handle_page(*ddg, strtol(value, NULL, 10));
+                    else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+                } else if (strcmp(commande, "pagt") == 0) {
+                    if (verif == NULL) ddg_handle_pagt(*ddg, strtol(value, NULL, 10));
+                    else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+                } else if (strcmp(commande, "pale") == 0) {
+                    if (verif == NULL) ddg_handle_pale(*ddg, strtol(value, NULL, 10));
+                    else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+                } else if (strcmp(commande, "palt") == 0) {
+                    if (verif == NULL) ddg_handle_palt(*ddg, strtol(value, NULL, 10));
+                    else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+                } else if (strcmp(commande, "pa") == 0) {
+                    if (verif == NULL) ddg_handle_pa(*ddg, strtol(value, NULL, 10));
+                    else fprintf(stderr, "%s: %s for the %s command\n", argv[0], verif, commande);
+                } else if (strlen(commande) > 0) {
+                    fprintf(stderr, "%s: Invalid command\n", argv[0]);
+                }
             } else {
-                fprintf(stderr, "%s: Invalid command\n", argv[0]);
+                while(getchar() != '\n');
+                fprintf(stderr, "%s: Too many characters for the command\n", argv[0]);
             }
-        } else {
-            while(getchar() != '\n');
-            fprintf(stderr, "%s: Too many characters for the command\n", argv[0]);
         }
-        
+
         free(commande);
         free(value);
     } while (!exit);
-    
+
     free(saisie);
 
     ddg_free(ddg);
     xmlCleanupParser();
     free(xmlFileNode);
     xmlFreeDoc(xmlFile);
-    
+
     return 0;
 }

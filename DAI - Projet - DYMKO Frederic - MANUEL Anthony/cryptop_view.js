@@ -76,12 +76,13 @@ view = {
 
   currenciesCrytopsUI(model, state) {
 
-    const list = state.data.cryptos.filtered.map(x => x);
+    let list = state.data.cryptos.filtered;
     const pagination = model.ui.currenciesCard.tabs.cryptos.pagination;
-    let position = pagination.rowsPerPage[pagination.rowsPerPageIndex];
+    let pageLength = pagination.rowsPerPage[pagination.rowsPerPageIndex];
     let dataHTML = '';
-    let i;
-    for (i = pagination.currentPage * position - position; i < position && i < list.length; i++) {
+    let i = pagination.currentPage * pageLength - pageLength;
+    if (i < 0 ) i = 0;
+    while (i < pageLength * pagination.currentPage && i < list.length) {
       let element = list[i];
       let dataClass = ''; 
       let coins = Object.keys(model.config.coins);
@@ -94,10 +95,10 @@ view = {
         }
       }
       let change = element.change.toFixed(3);
-      change += (element.change > 1)? ' ↗' : (element.change === 0)? ' ∼' : ' ↘';
+      change += (element.change > 0)? ' ↗' : (element.change === 0)? ' ∼' : ' ↘';
 
       dataHTML += `
-        <tr class="${dataClass}">
+        <tr class="${dataClass}" onclick="actions.changeStatus({id: '${element.code}'})">
           <td class="text-center">
             <span class="badge badge-pill badge-light">
               <img src="${element.icon_url}" /> ${element.code}
@@ -107,7 +108,21 @@ view = {
           <td class="text-right">${change}</td>
         </tr>
       `
+      i++;
     }
+
+    let coins = model.config.coins;
+    let keys = Object.keys(coins).sort();
+
+    let favorite = keys.map(x => {
+      if(coins[x].quantity === 0) {
+        return `<span class="badge badge-warning">${x}</span>`;
+      } else {
+        return `<span class="badge badge-success">${x}</span>`;
+      }
+    }).join(' ');
+
+
     const paginationHTML = this.paginationUI(model, state, 'cryptos');
 
     return `
@@ -116,12 +131,12 @@ view = {
         <ul class="nav nav-pills card-header-tabs">
           <li class="nav-item">
             <a class="nav-link active" href="#currencies"> Cryptos <span
-                class="badge badge-light">10 / 386</span></a>
+                class="badge badge-light">${state.data.cryptos.filteredNum} / ${state.data.cryptos.listNum}</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-secondary" href="#currencies"
               onclick="actions.changeTab({tab:'currenciesFiats'})"> Monnaies cibles
-              <span class="badge badge-secondary">10 / 167</span></a>
+              <span class="badge badge-secondary">${state.data.fiats.filteredNum} / ${state.data.fiats.listNum}</span></a>
           </li>
         </ul>
       </div>
@@ -141,16 +156,16 @@ view = {
           <table class="col-12 table table-sm table-bordered">
             <thead>
               <th class="align-middle text-center col-2">
-                <a href="#currencies">Code</a>
+                <a href="#currencies" onclick="actions.changeSort({id: 'code'})">Code</a>
               </th>
               <th class="align-middle text-center col-5">
-                <a href="#currencies">Nom</a>
+                <a href="#currencies" onclick="actions.changeSort({id: 'name'})">Nom</a>
               </th>
               <th class="align-middle text-center col-2">
-                <a href="#currencies">Prix</a>
+                <a href="#currencies" onclick="actions.changeSort({id: 'price'})">Prix</a>
               </th>
               <th class="align-middle text-center col-3">
-                <a href="#currencies">Variation</a>
+                <a href="#currencies" onclick="actions.changeSort({id: 'change'})">Variation</a>
               </th>
             </thead>
             ${dataHTML}
@@ -159,190 +174,68 @@ view = {
         ${paginationHTML}
       </div>
       <div class="card-footer text-muted"> Cryptos préférées :
-        <span class="badge badge-warning">BCH</span>
-        <span class="badge badge-success">BTC</span>
-        <span class="badge badge-warning">BTLC</span>
-        <span class="badge badge-warning">DSH</span>
-        <span class="badge badge-success">ETH</span>
-        <span class="badge badge-success">LTC</span>
-        <span class="badge badge-warning">XMR</span>
+        ${favorite}
       </div>
     </div>
     `;
-
-    /*return `
-    <div class="card border-secondary" id="currencies">
-      <div class="card-header">
-        <ul class="nav nav-pills card-header-tabs">
-          <li class="nav-item">
-            <a class="nav-link active" href="#currencies"> Cryptos <span
-                class="badge badge-light">10 / 386</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-secondary" href="#currencies"
-              onclick="actions.changeTab({tab:'currenciesFiats'})"> Monnaies cibles
-              <span class="badge badge-secondary">10 / 167</span></a>
-          </li>
-        </ul>
-      </div>
-      <div class="card-body">
-        <div class="input-group">
-          <div class="input-group-append">
-            <span class="input-group-text">Filtres : </span>
-          </div>
-          <input value="coin" id="filterText" type="text" class="form-control"
-            placeholder="code ou nom..."/>
-          <div class="input-group-append">
-            <span class="input-group-text">Prix &gt; </span>
-          </div>
-          <input id="filterSup" type="number" class="form-control" value="5" min="0" />
-        </div> <br />
-        <div class="table-responsive">
-          <table class="col-12 table table-sm table-bordered">
-            <thead>
-              <th class="align-middle text-center col-2">
-                <a href="#currencies">Code</a>
-              </th>
-              <th class="align-middle text-center col-5">
-                <a href="#currencies">Nom</a>
-              </th>
-              <th class="align-middle text-center col-2">
-                <a href="#currencies">Prix</a>
-              </th>
-              <th class="align-middle text-center col-3">
-                <a href="#currencies">Variation</a>
-              </th>
-            </thead>
-            <tr id="00" class="bg-warning">
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/BCH.png" /> BCH
-                </span></td>
-              <td><b>Bitcoin Cash / BCC</b></td>
-              <td class="text-right"><b>253.44</b></td>
-              <td class="text-right">6.727 ↗</td>
-            </tr>
-            <tr class="">
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/BNB.png" /> BNB
-                </span></td>
-              <td><b>Binance Coin</b></td>
-              <td class="text-right"><b>19.29</b></td>
-              <td class="text-right">0.000 ∼</td>
-            </tr>
-            <tr class="bg-success text-light">
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/BTC.png" /> BTC
-                </span></td>
-              <td><b>Bitcoin</b></td>
-              <td class="text-right"><b>7885.74</b></td>
-              <td class="text-right">-113.601 ↘</td>
-            </tr>
-            <tr class="">
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/BTG.png" /> BTG
-                </span></td>
-              <td><b>Bitcoin Gold</b></td>
-              <td class="text-right"><b>7.41</b></td>
-              <td class="text-right">-0.313 ↘</td>
-            </tr>
-            <tr class="bg-warning">
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/BTLC.png" /> BTLC
-                </span></td>
-              <td><b>BitLuckCoin</b></td>
-              <td class="text-right"><b>8.17</b></td>
-              <td class="text-right">-0.004 ↘</td>
-            </tr>
-            <tr class="bg-warning">
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/DSH.png" /> DSH
-                </span></td>
-              <td><b>Dashcoin</b></td>
-              <td class="text-right"><b>228.86</b></td>
-              <td class="text-right">-0.125 ↘</td>
-            </tr>
-            <tr class="bg-success text-light">
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/LTC.png" /> LTC
-                </span></td>
-              <td><b>Litecoin</b></td>
-              <td class="text-right"><b>54.04</b></td>
-              <td class="text-right">-1.519 ↘</td>
-            </tr>
-            <tr class="">
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/NMC.png" /> NMC
-                </span></td>
-              <td><b>NameCoin</b></td>
-              <td class="text-right"><b>5.33</b></td>
-              <td class="text-right">-0.003 ↘</td>
-            </tr>
-            <tr class="">
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/SBC.png" /> SBC
-                </span></td>
-              <td><b>StableCoin</b></td>
-              <td class="text-right"><b>6.35</b></td>
-              <td class="text-right">-0.003 ↘</td>
-            </tr>
-            <tr class="">
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/TRC.png" /> TRC
-                </span></td>
-              <td><b>TerraCoin</b></td>
-              <td class="text-right"><b>5.63</b></td>
-              <td class="text-right">-0.003 ↘</td>
-            </tr>
-          </table>
-        </div>
-        ${paginationHTML}
-      </div>
-      <div class="card-footer text-muted"> Cryptos préférées :
-        <span class="badge badge-warning">BCH</span>
-        <span class="badge badge-success">BTC</span>
-        <span class="badge badge-warning">BTLC</span>
-        <span class="badge badge-warning">DSH</span>
-        <span class="badge badge-success">ETH</span>
-        <span class="badge badge-success">LTC</span>
-        <span class="badge badge-warning">XMR</span>
-      </div>
-    </div>
-    `;*/
   },
 
   paginationUI(model, state, currency) {
+    let tabs = model.ui.currenciesCard.selectedTab;
+    let modelPagination = model.ui.currenciesCard.tabs[tabs].pagination;
+    let currentPage = modelPagination.currentPage;
+    let statePagination = state.ui.currenciesCard.tabs[tabs].pagination;
+    let pages = `<li class="${(currentPage === 1)? 'page-item disabled': ''}">
+                    <a class="page-link" href="#currencies" onclick="actions.changePage({v: ${(currentPage === 1)? '': currentPage - 1}})">&lt;</a>
+                 </li>
+                 `;
+
+
+    
+    let i = modelPagination.currentPage;
+    let iMax;
+    if (i <= 4) {
+      i = 1;
+      iMax = (statePagination.nbPages > 8)? 8 : statePagination.nbPages;
+    } else if (i > statePagination.nbPages - 4) {
+      i = statePagination.nbPages - 7;
+      iMax = statePagination.nbPages;
+    } else {
+      i = modelPagination.currentPage - 3;
+      iMax = modelPagination.currentPage + 4;
+    }
+    while(i <= iMax) {
+      pages += `<li class="${(currentPage === i)? 'page-item active': ''}">
+                  <a class="page-link" href="#currencies" onclick="actions.changePage({v: ${i}})">${i}</a>
+                </li> 
+                `;
+                i++;
+    }
+
+    pages += `<li class="${(currentPage === statePagination.nbPages)? 'page-item disabled' : ''}">
+                <a class="page-link" href="#currencies" onclick="actions.changePage({v: ${(currentPage === statePagination.nbPages)? '' : currentPage + 1}})">&gt;</a>
+              </li>
+    
+    `;
+
+    let paginations = '';
+    for(i = 0; i < modelPagination.rowsPerPage.length; i++) {
+      paginations += `<option ${(modelPagination.rowsPerPage[i] === modelPagination.rowsPerPage[modelPagination.rowsPerPageIndex])? 'selected="selected"' : ''} value="${i}">${modelPagination.rowsPerPage[i]}</option>
+      `;
+    }
+
     return `
     <section id="pagination">
       <div class="row justify-content-center">
         <nav class="col-auto">
           <ul class="pagination">
-            <li class="page-item disabled">
-              <a class="page-link" href="#currencies">&lt;</a>
-            </li>
-            <li class="page-item active">
-              <a class="page-link" href="#currencies">1</a>
-            </li>
-            <li class="page-item disabled">
-              <a class="page-link" href="#currencies">&gt;</a>
-            </li>
+            ${pages}
           </ul>
         </nav>
         <div class="col-auto">
           <div class="input-group mb-3">
-            <select class="custom-select" id="selectTo">
-              <option value="0">5</option>
-              <option selected="selected" value="1">10</option>
-              <option value="2">15</option>
+            <select class="custom-select" id="selectTo" onchange="actions.changeLength({v: value})">
+              ${paginations}
             </select>
             <div class="input-group-append">
               <span class="input-group-text">par page</span>
@@ -358,6 +251,44 @@ view = {
 
     const paginationHTML = this.paginationUI(model, state, 'fiats');
 
+
+    let target = model.config.targets;
+    let favorite = target.list.sort().map(element => {
+      return (element === target.active)? `<span class="badge badge-success">${element}</span>` : `<span class="badge badge-warning">${element}</span>`;
+    }).join(' ');
+
+    let list = state.data.fiats.filtered;
+    let pagination = model.ui.currenciesCard.tabs.fiats.pagination;
+    let pageLength = pagination.rowsPerPage[pagination.rowsPerPageIndex];
+    let dataHTML = '';
+    let i = pagination.currentPage * pageLength - pageLength;
+    while (i < pageLength * pagination.currentPage && i < list.length) {
+      let element = list[i];
+      let dataClass = ''; 
+      let target = model.config.targets;
+      pos = target.list.indexOf(element.code);
+      if (pos !== -1) {
+        if (model.config.targets.active === element.code) {
+          dataClass = 'bg-success text-light';
+        } else {
+          dataClass = 'bg-warning';
+        }
+      }
+
+      dataHTML += `
+        <tr class="${dataClass}" onclick="actions.changeStatus({id: '${element.code}'})">
+          <td class="text-center">
+            <span class="badge-pill">
+              ${element.code}
+            </span></td>
+          <td><b>${element.name}</b></td>
+          <td class="text-center">${element.symbol}</td>
+        </tr>
+      `
+      i++;
+    }
+
+
     return `
     <div class="card border-secondary"
       id="currencies">
@@ -366,11 +297,11 @@ view = {
           <li class="nav-item">
             <a class="nav-link text-secondary" href="#currencies"
               onclick="actions.changeTab({tab:'currenciesCryptos'})"> Cryptos <span
-                class="badge badge-secondary">10 / 386</span></a>
+                class="badge badge-secondary">${state.data.cryptos.filteredNum} / ${state.data.cryptos.listNum}</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="#currencies">Monnaies cibles <span
-                class="badge badge-light">10 / 167</span></a>
+                class="badge badge-light">${state.data.fiats.filteredNum} / ${state.data.fiats.listNum}</span></a>
           </li>
         </ul>
       </div>
@@ -379,19 +310,29 @@ view = {
           <div class="input-group-append">
             <span class="input-group-text">Filtres : </span>
           </div>
-          <input value="ro" id="filterText" type="text" class="form-control"
-            placeholder="code ou nom..."/>
+          <input value="${model.ui.currenciesCard.tabs.fiats.filters.text}" id="filterText" type="text" class="form-control"
+            placeholder="code ou nom..." onchange="actions.changeFilterTab({value: value, id:'text'})"/>
         </div> <br />
-        <div>À compléter...</div><br />
+        <div>
+        <table class="col-12 table table-sm table-bordered">
+        <thead>
+          <th class="align-middle text-center col-2">
+            <a href="#currencies" onclick="actions.changeSort({id: 'code'})">Code</a>
+          </th>
+          <th class="align-middle text-center col-4">
+            <a href="#currencies" onclick="actions.changeSort({id: 'name'})">Nom</a>
+          </th>
+          <th class="align-middle text-center col-2">
+            <a href="#currencies" onclick="actions.changeSort({id: 'symbol'})">Symbole</a>
+          </th>
+        </thead>
+        ${dataHTML}
+      </table>
+        </div>
         ${paginationHTML}
       </div>
       <div class="card-footer text-muted"> Monnaies préférées :
-        <span class="badge badge-warning">CUP</span>
-        <span class="badge badge-success">EUR</span>
-        <span class="badge badge-warning">GBP</span>
-        <span class="badge badge-warning">JEP</span>
-        <span class="badge badge-warning">TTD</span>
-        <span class="badge badge-warning">USD</span>
+        ${favorite}
       </div>
     </div>
     `;
@@ -549,7 +490,85 @@ view = {
   },
 
   walletAjouterUI(model, state) {
+    let coins = model.config.coins;
+    let stateCoins = state.data.coins;
+    let list = state.data.cryptos.list;
+
+    let dataHTML = '';
+    let verif = true;
+    let total = 0;
+    stateCoins.nullValueCodes.forEach(element => {
+      let value; 
+      if (isNaN(coins[element].quantityNew) || coins[element].quantityNew < 0) {
+        value = '???';
+        verif = false;
+      } else {
+        value = (coins[element].quantityNew * list[element].price).toFixed(2);
+        total += coins[element].quantityNew * list[element].price;
+      }
+      dataHTML += `
+      <tr>
+        <td class="text-center">
+          <span class="badge badge-pill badge-light">
+            <img src="${list[element].icon_url}" /> ${list[element].code}
+          </span></td>
+        <td><b>${list[element].name}</b></td>
+        <td class="text-right">${list[element].price.toFixed(2)}</td>
+        <td class="text-right">
+          <input type="text" class="form-control ${(isNaN(value))? 'text-danger' : (value > 0)? 'text-primary' : ''}" value="${(coins[element].quantityNew === '')? '0' : coins[element].quantityNew}"/>
+        </td>
+        <td class="text-right"><span class="${(isNaN(value))? 'text-danger' : (value > 0)? 'text-primary' : ''}"><b>${value}</b></span></td>
+      </tr>
+      `;
+    });
+
     return `
+    <div class="card border-secondary text-center" id="wallet">
+    <div class="card-header">
+      <ul class="nav nav-pills card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link text-secondary" href="#wallet"
+            onclick="actions.changeTab({tab:'walletPortfolio'})"> Portfolio <span
+              class="badge badge-secondary">${stateCoins.posValueCodes.length}</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#wallet">Ajouter <span
+              class="badge badge-light">${stateCoins.nullValueCodes.length}</span></a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <br />
+      <div class="table-responsive">
+        <table class="col-12 table table-sm table-bordered">
+          <thead>
+            <th class="align-middle text-center col-1"> Code </th>
+            <th class="align-middle text-center col-4"> Nom </th>
+            <th class="align-middle text-center col-2"> Prix </th>
+            <th class="align-middle text-center col-3"> Qté </th>
+            <th class="align-middle text-center col-2"> Total </th>
+          </thead>
+          ${dataHTML}
+        </table>
+      </div>
+      <div class="input-group d-flex justify-content-end">
+        <div class="input-group-prepend">
+          <button class="${verif? '' : 'btn disabled'}">Confirmer</button>
+        </div>
+        <div class="input-group-append">
+          <button class="btn btn-secondary">Annuler</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <h3><span class="badge badge-primary">Total : ${total.toFixed(2)} ${model.config.targets.active}</span></h3>
+    </div>
+  </div>
+    `;
+
+
+
+    /*return `
     <div class="card border-secondary text-center" id="wallet">
       <div class="card-header">
         <ul class="nav nav-pills card-header-tabs">
@@ -641,7 +660,7 @@ view = {
         <h3><span class="badge badge-primary">Total : 4084.65 EUR</span></h3>
       </div>
     </div>
-    `;
+    `;*/
   },
 
 

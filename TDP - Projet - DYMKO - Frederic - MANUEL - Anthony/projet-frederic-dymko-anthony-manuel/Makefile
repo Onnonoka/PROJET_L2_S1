@@ -8,11 +8,11 @@ DEBUG = gdb --args
 
 all: ddgm.out
 
-player.o: player.c 
-	$(CC) $(CFLAGS) -c -o $@ $< $(LDFLAGS) $(LDLIBS)
+player.o: player.c
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 ddg.o: ddg.c
-	$(CC) $(CFLAGS) -c -o $@ $< $(LDFLAGS) $(LDLIBS)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 ddgm.out: ddgm.c ddg.o player.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) $(LDLIBS)
@@ -28,4 +28,3 @@ clear:
 
 debug: ddgm.out
 	$(DEBUG) ./ddgm.out ./ddg.xml
-	

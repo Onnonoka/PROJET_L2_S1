@@ -60,19 +60,62 @@ model = {
       } break;
 
       case 'changeFilter' :
-        if (data.id === 'price') {
-          this.ui.currenciesCard.tabs.cryptos.filters.price = data.filter;
-        } else {
-          this.ui.currenciesCard.tabs.cryptos.filters.text = data.filter;
-        }
-        this.hasChanged.cryptos.filter = true;
-        this.hasChanged.cryptos.pagination = true;
+        this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].filters[data.id] = data.filter;
+        this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].pagination.currentPage = 1;
+
+        this.hasChanged[this.ui.currenciesCard.selectedTab].filter = true;
+        this.hasChanged[this.ui.currenciesCard.selectedTab].pagination = true;
       break;
+
+      case 'changeSort' :
+        let sort = this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].sort;
+        if (sort.columns[sort.column] === data.sort) {
+          sort.incOrder[sort.column] = !sort.incOrder[sort.column];
+        } else {
+          sort.columns[sort.column] === true;
+          sort.column = sort.columns.indexOf(data.sort);
+        }
+        this.hasChanged[this.ui.currenciesCard.selectedTab].sort = true;
+      break;
+
+      case 'changePage': 
+        this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].pagination.currentPage = data.value;
+        this.hasChanged[this.ui.currenciesCard.selectedTab].pagination = true;
+      break;
+<<<<<<< HEAD
 
       case 'totalPortefolio' :
         
       // TODO: ajoutez des cas répondant à vos actions...
+=======
+>>>>>>> bf720599eeb5a67b01bb6fb577064c7ee88d7975
 
+      case 'changePageLength':
+        this.ui.currenciesCard.tabs[model.ui.currenciesCard.selectedTab].pagination.rowsPerPageIndex = data.value;
+        this.hasChanged[model.ui.currenciesCard.selectedTab].pagination = true;
+      break;
+
+      case 'changeStatus':
+        if (model.ui.currenciesCard.selectedTab === 'cryptos') {
+          let coins = this.config.coins;
+          let pos = Object.keys(coins).indexOf(data.id);
+          if (pos === -1) {
+            coins[data.id] = {quantity: 0, quantityNew: ''};
+          } else if (coins[data.id].quantity === 0 && coins[data.id].quantityNew === '') {
+            delete coins[data.id];
+          }
+        } else {
+          let target = this.config.targets;
+          let pos = target.list.indexOf(data.id);
+          if (pos === -1) {
+            target.list.push(data.id);
+          } else if (target.list[pos] !== target.active) {
+            target.list.splice(pos, 1);
+          }
+        }
+      break;
+      // TODO: ajoutez des cas répondant à vos actions...
+      
 
       default:
         console.error(`model.samPresent(), unknown do: '${data.do}' `);
