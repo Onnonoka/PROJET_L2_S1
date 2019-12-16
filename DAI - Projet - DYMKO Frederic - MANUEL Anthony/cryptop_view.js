@@ -494,7 +494,86 @@ view = {
   },
 
   walletAjouterUI(model, state) {
+    let coins = model.config.coins;
+    let stateCoins = state.data.coins;
+    let list = state.data.cryptos.list;
+
+    let dataHTML = '';
+
+    let total = 0;
+    stateCoins.nullValueCodes.forEach(element => {
+      let value; 
+      if (isNaN(coins[element].quantityNew)) {
+        value = coins[element].quantityNew;
+      } else if (coins[element].quantityNew < 0) {
+        value = '???';
+      } else {
+        value = (coins[element].quantityNew * list[element].price).toFixed(2);
+        total += coins[element].quantityNew * list[element].price;
+      }
+      dataHTML += `
+      <tr>
+        <td class="text-center">
+          <span class="badge badge-pill badge-light">
+            <img src="${list[element].icon_url}" /> ${list[element].code}
+          </span></td>
+        <td><b>${list[element].name}</b></td>
+        <td class="text-right">${list[element].price.toFixed(2)}</td>
+        <td class="text-right">
+          <input type="text" class="form-control " value="${coins[element].quantityNew}" onchange="actions.changeValue({})"/>
+        </td>
+        <td class="text-right"><span class="${(isNaN(value))? 'form-control text-danger' : ''}"><b>${value}</b></span></td>
+      </tr>
+      `;
+    });
+
     return `
+    <div class="card border-secondary text-center" id="wallet">
+    <div class="card-header">
+      <ul class="nav nav-pills card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link text-secondary" href="#wallet"
+            onclick="actions.changeTab({tab:'walletPortfolio'})"> Portfolio <span
+              class="badge badge-secondary">${stateCoins.posValueCodes.length}</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#wallet">Ajouter <span
+              class="badge badge-light">${stateCoins.nullValueCodes.length}</span></a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <br />
+      <div class="table-responsive">
+        <table class="col-12 table table-sm table-bordered">
+          <thead>
+            <th class="align-middle text-center col-1"> Code </th>
+            <th class="align-middle text-center col-4"> Nom </th>
+            <th class="align-middle text-center col-2"> Prix </th>
+            <th class="align-middle text-center col-3"> Qté </th>
+            <th class="align-middle text-center col-2"> Total </th>
+          </thead>
+          ${dataHTML}
+        </table>
+      </div>
+      <div class="input-group d-flex justify-content-end">
+        <div class="input-group-prepend">
+          <button class="btn disabled">Confirmer</button>
+        </div>
+        <div class="input-group-append">
+          <button class="btn btn-secondary">Annuler</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <h3><span class="badge badge-primary">Total : ${total.toFixed(2)} ${model.config.targets.active}</span></h3>
+    </div>
+  </div>
+    `;
+
+
+
+    /*return `
     <div class="card border-secondary text-center" id="wallet">
       <div class="card-header">
         <ul class="nav nav-pills card-header-tabs">
@@ -586,7 +665,7 @@ view = {
         <h3><span class="badge badge-primary">Total : 4084.65 EUR</span></h3>
       </div>
     </div>
-    `;
+    `;*/
   },
 
 
