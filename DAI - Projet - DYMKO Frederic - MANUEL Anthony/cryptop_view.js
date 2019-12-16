@@ -557,10 +557,10 @@ view = {
       </div>
       <div class="input-group d-flex justify-content-end">
         <div class="input-group-prepend">
-          <button class=" btn ${verif? 'btn-primary' : 'disabled'}" onclick="actions.updateCoins()">Confirmer</button>
+          <button class=" btn ${verif && !valid? 'btn-primary' : 'disabled'}" onclick="actions.updateCoins()">Confirmer</button>
         </div>
         <div class="input-group-append">
-          <button class="btn btn-secondary" onclick="actions.resetWallet()">Annuler</button>
+          <button class="btn ${!valid? 'btn-secondary' : 'disabled'}" onclick="actions.resetWallet()">Annuler</button>
         </div>
       </div>
     </div>
@@ -569,102 +569,6 @@ view = {
     </div>
   </div>
     `;
-
-
-
-    /*return `
-    <div class="card border-secondary text-center" id="wallet">
-      <div class="card-header">
-        <ul class="nav nav-pills card-header-tabs">
-          <li class="nav-item">
-            <a class="nav-link text-secondary" href="#wallet"
-              onclick="actions.changeTab({tab:'walletPortfolio'})"> Portfolio <span
-                class="badge badge-secondary">3</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#wallet">Ajouter <span
-                class="badge badge-light">4</span></a>
-          </li>
-        </ul>
-      </div>
-      <div class="card-body">
-        <br />
-        <div class="table-responsive">
-          <table class="col-12 table table-sm table-bordered">
-            <thead>
-              <th class="align-middle text-center col-1"> Code </th>
-              <th class="align-middle text-center col-4"> Nom </th>
-              <th class="align-middle text-center col-2"> Prix </th>
-              <th class="align-middle text-center col-3"> Qté </th>
-              <th class="align-middle text-center col-2"> Total </th>
-            </thead>
-            <tr>
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/BCH.png" /> BCH
-                </span></td>
-              <td><b>Bitcoin Cash / BCC</b></td>
-              <td class="text-right">253.44</td>
-              <td class="text-right">
-                <input type="text" class="form-control " value="0" />
-              </td>
-              <td class="text-right"><span class=""><b>0.00</b></span></td>
-            </tr>
-            <tr>
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/BTLC.png" /> BTLC
-                </span></td>
-              <td><b>BitLuckCoin</b></td>
-              <td class="text-right">8.17</td>
-              <td class="text-right">
-                <input type="text" class="form-control text-primary" value="500" />
-              </td>
-              <td class="text-right"><span
-                  class="text-primary"><b>4084.65</b></span></td>
-            </tr>
-            <tr>
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/DSH.png" /> DSH
-                </span></td>
-              <td><b>Dashcoin</b></td>
-              <td class="text-right">228.86</td>
-              <td class="text-right">
-                <input type="text" class="form-control text-danger" value="-1" />
-              </td>
-              <td class="text-right"><span class="text-danger"><b>???</b></span>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-center">
-                <span class="badge badge-pill badge-light">
-                  <img src="https://assets.coinlayer.com/icons/XMR.png" /> XMR
-                </span></td>
-              <td><b>Monero</b></td>
-              <td class="text-right">59.57</td>
-              <td class="text-right">
-                <input type="text" class="form-control text-danger" value="plein!" />
-              </td>
-              <td class="text-right"><span class="text-danger"><b>???</b></span>
-              </td>
-            </tr>
-          </table>
-        </div>
-        <div class="input-group d-flex justify-content-end">
-          <div class="input-group-prepend">
-            <button class="btn disabled">Confirmer</button>
-          </div>
-          <div class="input-group-append">
-            <button class="btn btn-secondary">Annuler</button>
-          </div>
-        </div>
-      </div>
-      <div class="card-footer">
-        <h3><span class="badge badge-primary">Total : 4084.65 EUR</span></h3>
-      </div>
-    </div>
-    `;*/
   },
 
 

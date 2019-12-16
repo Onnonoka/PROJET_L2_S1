@@ -107,7 +107,6 @@ model = {
           }
         }
         this.hasChanged.coins = true;
-        console.log(this.config.coins);
       break;
 
       case 'updateCoins': 
