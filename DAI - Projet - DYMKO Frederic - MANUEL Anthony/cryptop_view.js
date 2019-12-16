@@ -498,9 +498,7 @@ view = {
     let verif = true;
     let valid = true;
     let total = 0;
-    console.log(stateCoins.nullValueCodes);
     stateCoins.nullValueCodes.forEach(element => {
-      console.log(element);
       if (parseInt(coins[element].quantityNew) !== coins[element].quantity) valid = false;
       let value;
       if (isNaN(coins[element].quantityNew) || coins[element].quantityNew < 0) {
