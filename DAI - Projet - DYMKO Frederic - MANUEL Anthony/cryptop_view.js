@@ -560,7 +560,7 @@ view = {
           <button class=" btn ${verif? 'btn-primary' : 'disabled'}" onclick="actions.updateCoins()">Confirmer</button>
         </div>
         <div class="input-group-append">
-          <button class="btn btn-secondary">Annuler</button>
+          <button class="btn btn-secondary" onclick="actions.resetWallet()">Annuler</button>
         </div>
       </div>
     </div>

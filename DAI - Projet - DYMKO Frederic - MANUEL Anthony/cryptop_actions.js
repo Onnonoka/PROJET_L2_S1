@@ -106,6 +106,10 @@ actions = {
   updateValues(data) {
     model.samPresent({do: 'updateValues', id: data.id, value: data.v});
   },
+
+  resetWallet() {
+    model.samPresent({do: 'resetWallet'});
+  },
   // TODO: ajoutez vos fonctions...
 
   TotalPortefolio(data) // Met a jour tous les totaux du Portefolio (Amélioration possible : met seulement à jour la ligne concernée par le changement.).

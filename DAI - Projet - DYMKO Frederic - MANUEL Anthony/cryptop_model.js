@@ -131,6 +131,17 @@ model = {
         coins[data.id].quantityNew = data.value;
         this.hasChanged.coins = true;
       break;
+
+      case 'resetWallet':
+        coins = this.config.coins;
+        let tabs = this.ui.walletCard.selectedTab === 'portfolio'? 'posValueCodes' : 'nullValueCodes';
+        state.data.coins[tabs].forEach(element => {
+          coins[element].quantityNew = coins[element].quantity;
+        });
+
+        this.hasChanged.coins;
+      
+      break;
       // TODO: ajoutez des cas répondant à vos actions...
       
 
