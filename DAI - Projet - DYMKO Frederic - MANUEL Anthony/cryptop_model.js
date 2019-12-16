@@ -82,13 +82,6 @@ model = {
         this.ui.currenciesCard.tabs[this.ui.currenciesCard.selectedTab].pagination.currentPage = data.value;
         this.hasChanged[this.ui.currenciesCard.selectedTab].pagination = true;
       break;
-<<<<<<< HEAD
-
-      case 'totalPortefolio' :
-        
-      // TODO: ajoutez des cas répondant à vos actions...
-=======
->>>>>>> bf720599eeb5a67b01bb6fb577064c7ee88d7975
 
       case 'changePageLength':
         this.ui.currenciesCard.tabs[model.ui.currenciesCard.selectedTab].pagination.rowsPerPageIndex = data.value;
