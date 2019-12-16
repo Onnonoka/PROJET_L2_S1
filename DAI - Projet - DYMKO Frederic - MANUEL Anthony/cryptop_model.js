@@ -107,12 +107,6 @@ model = {
           }
         }
       break;
-
-      case 'changeValue':
-        console.log(data);
-        model.config.coins[data.id][add] = data.value;
-        model.hasChanged.coins = true;
-      break;
       // TODO: ajoutez des cas répondant à vos actions...
       
 
