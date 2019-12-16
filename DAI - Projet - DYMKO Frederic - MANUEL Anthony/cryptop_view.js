@@ -520,7 +520,7 @@ view = {
         <td><b>${list[element].name}</b></td>
         <td class="text-right">${list[element].price.toFixed(2)}</td>
         <td class="text-right">
-          <input type="text" class="form-control " value="${coins[element].quantityNew}" onchange="actions.changeValue({})"/>
+          <input type="text" class="form-control " value="${coins[element].quantityNew}"/>
         </td>
         <td class="text-right"><span class="${(isNaN(value))? 'form-control text-danger' : ''}"><b>${value}</b></span></td>
       </tr>
