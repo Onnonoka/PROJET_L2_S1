@@ -133,8 +133,8 @@ model = {
       break;
 
       case 'resetWallet':
-        coins = this.config.coins;
         let tabs = this.ui.walletCard.selectedTab === 'portfolio'? 'posValueCodes' : 'nullValueCodes';
+        coins = this.config.coins;
         state.data.coins[tabs].forEach(element => {
           coins[element].quantityNew = coins[element].quantity;
         });
