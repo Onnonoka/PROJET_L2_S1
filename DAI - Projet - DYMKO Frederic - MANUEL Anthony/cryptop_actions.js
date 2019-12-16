@@ -85,27 +85,8 @@ actions = {
 
   // TODO: ajoutez vos fonctions...
 
-  TotalPortefolio() // Met a jour tous les totaux du Portefolio (Amélioration possible : met seulement à jour la ligne concernée par le changement.).
+  TotalPortefolio(data) // Met a jour tous les totaux du Portefolio (Amélioration possible : met seulement à jour la ligne concernée par le changement.).
   {
-    let Tab = [];
-    let Total = document.getElementById("JeSuisTotal");
-    let somme = 0;
-    let i = 0;
 
-    Tab[1] = document.getElementsByClassName("PortefolioQte");
-    Tab[2] = document.getElementsByClassName("PortefolioTotal");
-    Tab[0] = document.getElementsByClassName("PortefolioMonnaie");
-
-    console.log('Total is working...');
-    console.log(Tab);
-    console.log(dataCoinlayerLive.rates[Tab[0][0].textContent.split(" ").join("").split("\n").filter(e => e !== "")].rate);
-
-    for(i = 0 ; i < Tab[0].length ; i++)
-    {
-      Tab[2][i].textContent = (dataCoinlayerLive.rates[Tab[0][i].textContent.split(" ").join("").split("\n").filter(e => e !== "")].rate * Tab[1][i].value).toFixed(2);
-      somme +=parseFloat(Tab[2][i].textContent);
-    }
-    somme = somme.toFixed(2);
-    Total.textContent = 'Total : '+ somme +' EUR';
   },
 };  

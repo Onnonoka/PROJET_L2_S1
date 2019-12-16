@@ -471,6 +471,38 @@ view = {
   },
 
   walletPortfolioUI(model, state) {
+    let i;
+    let tab = state.data.coins.posValueCodes;
+    let list = state.data.cryptos.list;
+    let html = '';
+    let qte = 0;
+    let element;
+    let total = 0;
+    let produit;
+
+    for (i = 0 ; i < tab.length ; i++)
+    {
+      qte = model.config.coins[tab[i]].quantity;
+      element = tab[i];
+      produit = isNaN(qte) ? qte : 0 * list[element].price;
+      total += produit;
+      html += `
+      <tr>
+      <td class="text-center">
+        <span class="badge badge-pill badge-light PortefolioMonnaie">
+          <img src="${list[element].icon_url}"/> ${list[element].code}
+        </span></td>
+      <td><b>${list[element].name}</b></td>
+      <td class="text-right ${isNaN(qte) ? "text-danger" : ""}">${list[element].price.toFixed(2)}</td>
+      <td class="text-right"><input type="text" onchange="actions.TotalPortefolio({name : '${element}' , qte : ${qte}})" class="form-control" value="${qte}"/>
+      </td>
+      <td class="text-right"><span class=""><b class="PortefolioTotal">${produit}</b></span></td>
+      </tr>
+      `;
+    }
+
+
+
     return `
     <div class="card border-secondary text-center" id="wallet">
       <div class="card-header">
@@ -497,43 +529,7 @@ view = {
               <th class="align-middle text-center col-3"> Qté </th>
               <th class="align-middle text-center col-2"> Total </th>
             </thead>
-            <tr>
-              <td class="text-center">
-                <span class="badge badge-pill badge-light PortefolioMonnaie">
-                  <img src="https://assets.coinlayer.com/icons/BTC.png" /> BTC
-                </span></td>
-              <td><b>Bitcoin</b></td>
-              <td class="text-right">7885.74</td>
-              <td class="text-right"><input type="text" onchange="actions.TotalPortefolio()" class="form-control PortefolioQte" value="2"/>
-              </td>
-              <td class="text-right"><span class=""><b class="PortefolioTotal">7885.74</b></span></td>
-            </tr>
-            <tr>
-              <td class="text-center">
-                <span class="badge badge-pill badge-light PortefolioMonnaie">
-                  <img src="https://assets.coinlayer.com/icons/ETH.png" /> ETH
-                </span></td>
-              <td><b>Ethereum</b></td>
-              <td class="text-right">168.21</td>
-              <td class="text-right">
-                <input type="text" onchange="actions.TotalPortefolio()" class="form-control text-primary PortefolioQte" value="13" />
-              </td>
-              <td class="text-right"><span
-                  class="text-primary"><b class="PortefolioTotal">2186.79</b></span></td>
-            </tr>
-            <tr>
-              <td class="text-center">
-                <span class="badge badge-pill badge-light PortefolioMonnaie">
-                  <img src="https://assets.coinlayer.com/icons/LTC.png" /> LTC
-                </span></td>
-              <td><b>Litecoin</b></td>
-              <td class="text-right">54.04</td>
-              <td class="text-right">
-                <input type="text" onchange="actions.TotalPortefolio()" class="form-control text-primary PortefolioQte" value="21" />
-              </td>
-              <td class="text-right"><span
-                  class="text-primary"><b class="PortefolioTotal">1134.81</b></span></td>
-            </tr>
+            ${html}
           </table>
         </div>
         <div class="input-group d-flex justify-content-end">
@@ -546,7 +542,7 @@ view = {
         </div>
       </div>
       <div class="card-footer">
-        <h3><span class="badge badge-primary" id="JeSuisTotal">Total : 11207.34 EUR</span></h3>
+        <h3><span class="badge badge-primary" id="JeSuisTotal">Total : ${total.toFixed(2)} ${model.config.targets.active}</span></h3>
       </div>
     </div>
     `;

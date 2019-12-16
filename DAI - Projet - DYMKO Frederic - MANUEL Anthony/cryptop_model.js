@@ -68,6 +68,9 @@ model = {
         this.hasChanged.cryptos.filter = true;
         this.hasChanged.cryptos.pagination = true;
       break;
+
+      case 'totalPortefolio' :
+        
       // TODO: ajoutez des cas répondant à vos actions...
 
 
