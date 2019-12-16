@@ -25,14 +25,6 @@
   - **TO DO**
     - [x] cryptosUI
     - [x] fiatsUI
-    - [ ] protfolioUI
+    - [x] protfolioUI
     - [ ] ajouterUI
   - **Warning and Error**
-    - *Warning* cryptos_view.js
-      > N'as pas l'atribut onclick sur les elements de crypto (f. currenciesCrytopsUI())
-      > Il n'y a pas la mise a jours de la pagination dans view (f. currenciesCrytopsUI())
-    - *Warning* cryptos_state.js
-      > le tableau filtered n'as pas de champs avec l'evolution de la crypto monais
-
-    
-    
