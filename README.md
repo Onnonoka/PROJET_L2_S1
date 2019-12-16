@@ -25,6 +25,6 @@
   - **TO DO**
     - [x] cryptosUI
     - [x] fiatsUI
-    - [x] protfolioUI
-    - [ ] ajouterUI
+    - [ ] protfolioUI
+    - [x] ajouterUI
   - **Warning and Error**
