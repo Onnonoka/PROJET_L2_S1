@@ -135,7 +135,7 @@ model = {
         let tabs = this.ui.walletCard.selectedTab === 'portfolio'? 'posValueCodes' : 'nullValueCodes';
         coins = this.config.coins;
         state.data.coins[tabs].forEach(element => {
-          coins[element].quantityNew = coins[element].quantity;
+          coins[element].quantityNew = coins[element].quantity.toString();
         });
 
         this.hasChanged.coins;
