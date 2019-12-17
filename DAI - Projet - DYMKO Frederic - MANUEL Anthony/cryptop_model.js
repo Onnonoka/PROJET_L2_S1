@@ -151,7 +151,7 @@ model = {
       case 'updateTotal':
         this.config.coins[data.id].quantityNew = data.qte.toString();
         this.hasChanged.coins = true;
-        break;
+      break;
       // TODO: ajoutez des cas répondant à vos actions...
       
 
