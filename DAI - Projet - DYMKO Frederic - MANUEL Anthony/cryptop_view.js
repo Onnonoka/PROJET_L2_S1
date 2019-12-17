@@ -262,8 +262,10 @@ view = {
     let pageLength = pagination.rowsPerPage[pagination.rowsPerPageIndex];
     let dataHTML = '';
     let i = pagination.currentPage * pageLength - pageLength;
+    if (i < 0) i = 0;
     while (i < pageLength * pagination.currentPage && i < list.length) {
       let element = list[i];
+      console.log(i, element);
       let dataClass = ''; 
       let target = model.config.targets;
       pos = target.list.indexOf(element.code);
