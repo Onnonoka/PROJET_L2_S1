@@ -114,6 +114,6 @@ actions = {
 
   TotalPortefolio(data) // Met a jour tous les totaux du Portefolio (Amélioration possible : met seulement à jour la ligne concernée par le changement.).
   {
-
+    model.samPresent({do: 'updateTotal' , id : data.name , qte : data.qte});
   },
 };  

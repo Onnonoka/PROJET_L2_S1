@@ -186,7 +186,7 @@ view = {
     let currentPage = modelPagination.currentPage;
     let statePagination = state.ui.currenciesCard.tabs[tabs].pagination;
     let pages = `<li class="${(currentPage === 1)? 'page-item disabled': ''}">
-                    <a class="page-link" href="#currencies" onclick="actions.changePage({v: ${(currentPage === 1)? '': currentPage - 1}})">&lt;</a>
+                    <a class="page-link" href="#currencies" ${(currentPage === 1)? '': `onclick="actions.changePage({v: ${currentPage - 1}})"`}>&lt;</a>
                  </li>
                  `;
 
@@ -213,7 +213,7 @@ view = {
     }
 
     pages += `<li class="${(currentPage === statePagination.nbPages)? 'page-item disabled' : ''}">
-                <a class="page-link" href="#currencies" onclick="actions.changePage({v: ${(currentPage === statePagination.nbPages)? '' : currentPage + 1}})">&gt;</a>
+                <a class="page-link" href="#currencies" ${(currentPage === statePagination.nbPages)? '' : `onclick="actions.changePage({v: ${currentPage + 1}})"`}>&gt;</a>
               </li>
     
     `;
@@ -424,10 +424,10 @@ view = {
     let produit;
 
     for (i = 0 ; i < tab.length ; i++)
-    {
-      qte = model.config.coins[tab[i]].quantity;
+    {// :)
+      qte = model.config.coins[tab[i]].quantityNew;
       element = tab[i];
-      produit = isNaN(qte) ? qte : 0 * list[element].price;
+      produit = qte * list[element].price;
       total += produit;
       html += `
       <tr>
@@ -437,9 +437,9 @@ view = {
         </span></td>
       <td><b>${list[element].name}</b></td>
       <td class="text-right ${isNaN(qte) ? "text-danger" : ""}">${list[element].price.toFixed(2)}</td>
-      <td class="text-right"><input type="text" onchange="actions.TotalPortefolio({name : '${element}' , qte : ${qte}})" class="form-control" value="${qte}"/>
+      <td class="text-right"><input type="text" onchange="actions.TotalPortefolio({name : '${element}' , qte : value})" class="form-control" value="${qte}"/>
       </td>
-      <td class="text-right"><span class=""><b class="PortefolioTotal">${produit}</b></span></td>
+      <td class="text-right"><span class=""><b class="">${produit.toFixed(2)}</b></span></td>
       </tr>
       `;
     }

@@ -111,14 +111,20 @@ model = {
 
       case 'updateCoins': 
         var coins = this.config.coins;
+        let list = this.config.targets.list;
         Object.values(coins).forEach(element => {
           if (element.quantityNew === '') {
             element.quantityNew = '0';
           }
         });
         Object.values(coins).forEach(element => {
-          if (!isNaN(element.quantityNew) && parseInt(element.quantityNew) > 0) {
-            element.quantity += parseInt(element.quantityNew);
+          if (this.ui.walletCard.selectedTab === 'ajouter') {
+            var verif = element.quantity === 0;
+          } else {
+            var verif = element.quantity !== 0;
+          }
+          if (!isNaN(element.quantityNew) && parseInt(element.quantityNew) > 0 && verif) {
+            element.quantity = parseInt(element.quantityNew);
           }
         });
 
@@ -130,7 +136,7 @@ model = {
         coins[data.id].quantityNew = data.value;
         this.hasChanged.coins = true;
       break;
-
+        //this.config.coins = Object.entries(this.config.coins).forEach(x => this.ui.walletCard.selectedTab === 'ajouter' ? x.quantity === 0 ? isNaN(x.quantityNew) || x.quantityNew < 0 ? null : x.quantity = x.quantityNew : null :  x.quantity !== 0 ? isNaN(x.quantityNew) || x.quantityNew < 0 ? null : x.quantity = x.quantityNew : null);
       case 'resetWallet':
         let tabs = this.ui.walletCard.selectedTab === 'portfolio'? 'posValueCodes' : 'nullValueCodes';
         coins = this.config.coins;
@@ -138,9 +144,14 @@ model = {
           coins[element].quantityNew = coins[element].quantity.toString();
         });
 
-        this.hasChanged.coins;
+        this.hasChanged.coins = true;
       
       break;
+
+      case 'updateTotal':
+        this.config.coins[data.id].quantityNew = data.qte.toString();
+        this.hasChanged.coins = true;
+        break;
       // TODO: ajoutez des cas répondant à vos actions...
       
 
