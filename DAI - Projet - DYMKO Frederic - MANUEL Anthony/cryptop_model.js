@@ -90,7 +90,7 @@ model = {
 
       case 'changeStatus':
         if (model.ui.currenciesCard.selectedTab === 'cryptos') {
-          let coins = this.config.coins;
+          coins = this.config.coins;
           let pos = Object.keys(coins).indexOf(data.id);
           if (pos === -1) {
             coins[data.id] = {quantity: 0, quantityNew: ''};
@@ -110,7 +110,7 @@ model = {
       break;
 
       case 'updateCoins': 
-        coins = this.config.coins;
+        var coins = this.config.coins;
         Object.values(coins).forEach(element => {
           if (element.quantityNew === '') {
             element.quantityNew = '0';
