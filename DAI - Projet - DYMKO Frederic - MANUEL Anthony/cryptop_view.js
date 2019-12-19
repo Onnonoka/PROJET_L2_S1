@@ -438,7 +438,7 @@ view = {
         </span></td>
       <td><b>${list[element].name}</b></td>
       <td class="text-right ${isNaN(qte) ? "text-danger" : ""}">${list[element].price.toFixed(2)}</td>
-      <td class="text-right"><input type="text" onchange="actions.TotalPortefolio({name : '${element}' , qte : value})" class="form-control" value="${isNaN(qte) ? 0 : qte}"/>
+      <td class="text-right"><input type="text" onchange="actions.TotalPortefolio({name : '${element}' , qte : value})" class="form-control" value="${qte === '' ? '0' : qte}"/>
       </td>
       <td class="text-right"><span class=""><b class="">${produit.toFixed(2)}</b></span></td>
       </tr>
