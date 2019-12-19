@@ -417,6 +417,7 @@ view = {
     let i;
     let tab = state.data.coins.posValueCodes;
     let list = state.data.cryptos.list;
+    let stateCoins = state.data.coins;
     let html = '';
     let qte = 0;
     let element;
@@ -452,12 +453,12 @@ view = {
         <ul class="nav nav-pills card-header-tabs">
           <li class="nav-item">
             <a class="nav-link active" href="#wallet">Portfolio <span
-                class="badge badge-light">3</span></a>
+                class="badge badge-light">${stateCoins.posValueCodes.length}</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-secondary" href="#wallet"
               onclick="actions.changeTab({tab:'walletAjouter'})"> Ajouter <span
-                class="badge badge-secondary">4</span></a>
+                class="badge badge-secondary">${stateCoins.nullValueCodes.length}</span></a>
           </li>
         </ul>
       </div>
