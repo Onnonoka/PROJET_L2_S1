@@ -117,8 +117,13 @@ actions = {
     model.samPresent({do: 'updateTotal' , id : data.name , qte : data.qte});
   },
 
-  confirmerProtefolio()
+  confirmerPortefolio()
   {
-    model.samPresent();
-  }
+    model.samPresent({do: 'acceptPortefolio'});
+  },
+
+  annulerPortefolio()
+  {
+    
+  },
 };  
