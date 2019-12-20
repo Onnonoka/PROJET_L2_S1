@@ -414,41 +414,44 @@ view = {
   },
 
   walletPortfolioUI(model, state) {
-    let i;
-    let tab = state.data.coins.posValueCodes;
-    let list = state.data.cryptos.list;
+    let coins = model.config.coins;
     let stateCoins = state.data.coins;
-    let valide = true;
-    let vert = true;
-    let html = '';
-    let qte = 0;
-    let element;
-    let total = 0;
-    let produit;
+    let list = state.data.cryptos.list;
 
-    for (i = 0 ; i < tab.length ; i++)
-    {// :)
-      qte = model.config.coins[tab[i]].quantityNew;
-      if (qte !== "") vert = false;
-      element = tab[i];
-      produit = (qte === "" ? model.config.coins[tab[i]].quantity : qte) * list[element].price;
-      if(isNaN(qte)) valide = false;
-      total += isNaN(produit) ? 0 : produit;
-      html += `
+    let dataHTML = '';
+    let verif = true;
+    let valid = true;
+    let total = 0;
+    let value;
+
+    stateCoins.posValueCodes.forEach(element => {
+      if (coins[element].quantityNew != coins[element].quantity && coins[element].quantityNew !== '') valid = false;
+      if (isNaN(coins[element].quantityNew) || coins[element].quantityNew < 0) {
+        value = '???';
+        verif = false;
+      } else {
+        if (coins[element].quantityNew === '') {
+          value = coins[element].quantity * list[element].price;
+        } else {
+          value = coins[element].quantityNew * list[element].price;
+        }
+        total += value;
+      }
+      dataHTML += `
       <tr>
-      <td class="text-center">
-        <span class="badge badge-pill badge-light PortefolioMonnaie">
-          <img src="${list[element].icon_url}"/> ${list[element].code}
-        </span></td>
-      <td><b>${list[element].name}</b></td>
-      <td class="text-right">${list[element].price.toFixed(2)}</td>
-      <td class="text-right"><input type="text" onchange="actions.TotalPortefolio({name : '${element}' , qte : value})" class="form-control ${isNaN(qte) ? "text-danger" : qte > 0 ? "text-primary" : ""}" value="${qte === "" ? model.config.coins[tab[i]].quantity : qte}"/>
-      </td>
-      <td class="text-right"><span class=""><b class="${isNaN(qte) ? "text-danger" : qte > 0 ? "text-primary" : ""}">${isNaN(qte) ? "???" : produit.toFixed(2)}</b></span></td>
+        <td class="text-center">
+          <span class="badge badge-pill badge-light">
+            <img src="${list[element].icon_url}" /> ${list[element].code}
+          </span></td>
+        <td><b>${list[element].name}</b></td>
+        <td class="text-right">${list[element].price.toFixed(2)}</td>
+        <td class="text-right">
+          <input type="text" class="form-control ${(isNaN(coins[element].quantityNew) || coins[element].quantityNew < 0)? 'text-danger' : (coins[element].quantityNew === '' ? '' : (coins[element].quantity != coins[element].quantityNew)? 'text-primary' : '')}" value="${(coins[element].quantityNew === '')? coins[element].quantity : coins[element].quantityNew}" onchange="actions.updateValues({v: value, id: '${element}'})"/>
+        </td>
+        <td class="text-right"><span class="${(isNaN(coins[element].quantityNew) || coins[element].quantityNew < 0)? 'text-danger' : (coins[element].quantityNew === '' ? '' : (coins[element].quantity != coins[element].quantityNew)? 'text-primary' : '')}"><b>${value.toFixed(2)}</b></span></td>
       </tr>
       `;
-    }
-
+    });
 
 
     return `
@@ -477,20 +480,20 @@ view = {
               <th class="align-middle text-center col-3"> Qté </th>
               <th class="align-middle text-center col-2"> Total </th>
             </thead>
-            ${html}
+            ${dataHTML}
           </table>
         </div>
         <div class="input-group d-flex justify-content-end">
           <div class="input-group-prepend">
-            <button onclick="actions.confirmerPortfolio" class="btn ${valide ? "btn-primary" : "disabled"}">Confirmer</button>
+            <button ${verif && !valid ? 'onclick="actions.updateCoins()"' : ''} class="btn ${verif && !valid? 'btn-primary' : 'disabled'}">Confirmer</button>
           </div>
           <div class="input-group-append">
-            <button onclick="actions.annulerPortefolio" class="btn btn-secondary">Annuler</button>
+            <button ${!valid? 'onclick="actions.resetWallet()"' : ''} class="btn ${!valid? 'btn-secondary' : 'disabled'}">Annuler</button>
           </div>
         </div>
       </div>
       <div class="card-footer">
-        <h3><span class="badge ${vert ? "badge-success" : "badge-primary"}">Total : ${total.toFixed(2)} ${model.config.targets.active}</span></h3>
+        <h3><span class="badge ${valid? 'badge-success' : 'badge-primary'}">Total : ${total.toFixed(2)} ${model.config.targets.active}</span></h3>
       </div>
     </div>
     `;

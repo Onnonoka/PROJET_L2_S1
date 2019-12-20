@@ -111,19 +111,15 @@ model = {
 
       case 'updateCoins': 
         var coins = this.config.coins;
-        let list = this.config.targets.list;
         Object.values(coins).forEach(element => {
-          if (element.quantityNew === '') {
-            element.quantityNew = '0';
-          }
-        });
-        Object.values(coins).forEach(element => {
+          let verif = false;
           if (this.ui.walletCard.selectedTab === 'ajouter') {
-            var verif = element.quantity === 0;
+            verif = element.quantity === 0;
           } else {
-            var verif = element.quantity !== 0;
+            verif = element.quantity !== 0;
           }
-          if (!isNaN(element.quantityNew) && parseInt(element.quantityNew) > 0 && verif) {
+          console.log(element, element.quantityNew, element.quantityNew !== '');
+          if (element.quantityNew !== '' && !isNaN(element.quantityNew) && parseInt(element.quantityNew) >= 0 && verif) {
             element.quantity = parseInt(element.quantityNew);
           }
         });
@@ -148,24 +144,6 @@ model = {
       
       break;
 
-      case 'updateTotal':
-        this.config.coins[data.id].quantityNew = data.qte.toString();
-        this.hasChanged.coins = true;
-      break;
-
-      case 'accepterPortefolio' :
-        coins = this.config.coins;
-        Object.keys(coins).forEach(element =>
-          {
-            if(coins[element].quantity > 0)
-            {
-              coins[element].quantity = coins[element].quantityNew;
-              coins[element].quantityNew = '';
-            }
-          }
-        )
-        this.haschanged.coins = true;
-      break;
       // TODO: ajoutez des cas répondant à vos actions...
       
 
