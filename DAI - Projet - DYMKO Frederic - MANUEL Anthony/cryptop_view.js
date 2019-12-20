@@ -418,6 +418,7 @@ view = {
     let tab = state.data.coins.posValueCodes;
     let list = state.data.cryptos.list;
     let stateCoins = state.data.coins;
+    let valide = true;
     let html = '';
     let qte = 0;
     let element;
@@ -428,8 +429,9 @@ view = {
     {// :)
       qte = model.config.coins[tab[i]].quantityNew;
       element = tab[i];
-      produit = qte * list[element].price;
-      total += produit;
+      produit = (qte === "" ? model.config.coins[tab[i]].quantity : qte) * list[element].price;
+      if(isNaN(qte)) valide = false;
+      total += isNaN(produit) ? 0 : produit;
       html += `
       <tr>
       <td class="text-center">
@@ -437,10 +439,10 @@ view = {
           <img src="${list[element].icon_url}"/> ${list[element].code}
         </span></td>
       <td><b>${list[element].name}</b></td>
-      <td class="text-right ${isNaN(qte) ? "text-danger" : ""}">${list[element].price.toFixed(2)}</td>
-      <td class="text-right"><input type="text" onchange="actions.TotalPortefolio({name : '${element}' , qte : value})" class="form-control" value="${isNaN(qte) ? 0 : qte}"/>
+      <td class="text-right">${list[element].price.toFixed(2)}</td>
+      <td class="text-right"><input type="text" onchange="actions.TotalPortefolio({name : '${element}' , qte : value})" class="form-control ${isNaN(qte) ? "text-danger" : qte > 0 ? "text-primary" : ""}" value="${qte === "" ? model.config.coins[tab[i]].quantity : qte}"/>
       </td>
-      <td class="text-right"><span class=""><b class="">${produit.toFixed(2)}</b></span></td>
+      <td class="text-right"><span class=""><b class="${isNaN(qte) ? "text-danger" : qte > 0 ? "text-primary" : ""}">${isNaN(qte) ? "???" : produit.toFixed(2)}</b></span></td>
       </tr>
       `;
     }
@@ -478,10 +480,10 @@ view = {
         </div>
         <div class="input-group d-flex justify-content-end">
           <div class="input-group-prepend">
-            <button class="btn btn-primary">Confirmer</button>
+            <button onclick="actions.confirmerPortfolio" class="btn ${valide ? "btn-primary" : "disabled"}">Confirmer</button>
           </div>
           <div class="input-group-append">
-            <button class="btn btn-secondary">Annuler</button>
+            <button onclick="actions.annulerPortefolio" class="btn btn-secondary">Annuler</button>
           </div>
         </div>
       </div>
