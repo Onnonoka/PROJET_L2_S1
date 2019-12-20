@@ -431,7 +431,7 @@ view = {
       produit = qte * list[element].price;
       total += produit;
       html += `
-      <tr>
+      <tr><
       <td class="text-center">
         <span class="badge badge-pill badge-light PortefolioMonnaie">
           <img src="${list[element].icon_url}"/> ${list[element].code}
