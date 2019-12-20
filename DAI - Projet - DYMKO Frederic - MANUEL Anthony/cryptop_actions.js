@@ -116,4 +116,9 @@ actions = {
   {
     model.samPresent({do: 'updateTotal' , id : data.name , qte : data.qte});
   },
+
+  confirmerProtefolio()
+  {
+    model.samPresent();
+  }
 };  
