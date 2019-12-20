@@ -152,6 +152,20 @@ model = {
         this.config.coins[data.id].quantityNew = data.qte.toString();
         this.hasChanged.coins = true;
       break;
+
+      case 'accepterPortefolio' :
+        coins = this.config.coins;
+        Object.keys(coins).forEach(element =>
+          {
+            if(coins[element].quantity > 0)
+            {
+              coins[element].quantity = coins[element].quantityNew;
+              coins[element].quantityNew = '';
+            }
+          }
+        )
+        this.haschanged.coins = true;
+      break;
       // TODO: ajoutez des cas répondant à vos actions...
       
 

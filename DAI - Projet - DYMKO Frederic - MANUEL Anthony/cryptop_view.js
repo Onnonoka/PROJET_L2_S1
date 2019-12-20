@@ -419,6 +419,7 @@ view = {
     let list = state.data.cryptos.list;
     let stateCoins = state.data.coins;
     let valide = true;
+    let vert = true;
     let html = '';
     let qte = 0;
     let element;
@@ -428,6 +429,7 @@ view = {
     for (i = 0 ; i < tab.length ; i++)
     {// :)
       qte = model.config.coins[tab[i]].quantityNew;
+      if (qte !== "") vert = false;
       element = tab[i];
       produit = (qte === "" ? model.config.coins[tab[i]].quantity : qte) * list[element].price;
       if(isNaN(qte)) valide = false;
@@ -488,7 +490,7 @@ view = {
         </div>
       </div>
       <div class="card-footer">
-        <h3><span class="badge badge-primary">Total : ${total.toFixed(2)} ${model.config.targets.active}</span></h3>
+        <h3><span class="badge ${vert ? "badge-success" : "badge-primary"}">Total : ${total.toFixed(2)} ${model.config.targets.active}</span></h3>
       </div>
     </div>
     `;
