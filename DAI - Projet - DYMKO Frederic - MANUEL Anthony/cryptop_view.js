@@ -433,16 +433,23 @@ view = {
       if(isNaN(qte)) valide = false;
       total += isNaN(produit) ? 0 : produit;
       html += `
-      <tr>
+      <tr><
       <td class="text-center">
         <span class="badge badge-pill badge-light PortefolioMonnaie">
           <img src="${list[element].icon_url}"/> ${list[element].code}
         </span></td>
       <td><b>${list[element].name}</b></td>
+<<<<<<< HEAD
       <td class="text-right">${list[element].price.toFixed(2)}</td>
       <td class="text-right"><input type="text" onchange="actions.TotalPortefolio({name : '${element}' , qte : value})" class="form-control ${isNaN(qte) ? "text-danger" : qte > 0 ? "text-primary" : ""}" value="${qte === "" ? model.config.coins[tab[i]].quantity : qte}"/>
       </td>
       <td class="text-right"><span class=""><b class="${isNaN(qte) ? "text-danger" : qte > 0 ? "text-primary" : ""}">${isNaN(qte) ? "???" : produit.toFixed(2)}</b></span></td>
+=======
+      <td class="text-right ${isNaN(qte) ? "text-danger" : ""}">${list[element].price.toFixed(2)}</td>
+      <td class="text-right"><input type="text" onchange="actions.TotalPortefolio({name : '${element}' , qte : value})" class="form-control" value="${qte === '' ? '0' : qte}"/>
+      </td>
+      <td class="text-right"><span class=""><b class="">${produit.toFixed(2)} </b></span></td>
+>>>>>>> f3fa3913dde4e703e0604f2dcc10d22177cc8ed7
       </tr>
       `;
     }
